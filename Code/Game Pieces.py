@@ -1,7 +1,14 @@
 
 ######################## TO-DO ########################
 # - Make King class                                   #
-# - Probably something else                           #
+# - Probably something else                           #  
+#                                                     #
+# - When a move is attempted, a check must be made to #
+#   ensure that the destination does not contain a    #
+#   piece of the same color (NOT in this class,       #
+#   probably in the "Game" class)                     #
+# - Must also check for check or checkmate (again,    #
+#   not in this class)                                #
 #######################################################
 
 
