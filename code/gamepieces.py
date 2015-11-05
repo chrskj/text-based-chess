@@ -10,18 +10,20 @@
 # - Must also check for check or checkmate (again,    #
 #   not in this class)                                #
 #######################################################
-
+# sjakkbrikker: bonde: P, tårn: R, hest: N, løper: B, konge: K, dronning: Q
 
 class Game_Piece:
 
     # parent class for game pieces, all game pieces will inherit from this one
 
-    def __init__(self, col, x, y):
+    def __init__(self, col, x, y, letter):
         # color 'W' or 'B'
         self.color = col
         # x and y in [0, 7]
         self.x = x
         self.y = y
+        # letter for piece
+        self.letter = letter
 
     def is_valid_movement(self, x2, y2):
         # if not moving at all
@@ -36,8 +38,8 @@ class Game_Piece:
 
 class Knight(Game_Piece):
 
-    def __init__(self, col, x, y):
-        super(Knight, self).__init__(col, x, y)
+    def __init__(self, col, x, y, letter):
+        super(Knight, self).__init__(col, x, y, letter)
 
     def is_valid_movement(self, x2, y2):
 
@@ -59,10 +61,10 @@ class Knight(Game_Piece):
 
 class Queen(Game_Piece):
 
-    def __init__(self, col, x, y):
+    def __init__(self, col, x, y, letter):
 
         # the parent class, Game_Piece, assigns color, x and y
-        super(Queen, self).__init__(col, x, y)
+        super(Queen, self).__init__(col, x, y, letter)
 
     def is_valid_movement(self, x2, y2):
 
@@ -83,10 +85,10 @@ class Queen(Game_Piece):
 
 class Pawn(Game_Piece):
 
-    def __init__(self, col, x, y):
+    def __init__(self, col, x, y, letter):
 
         # the parent class, Game_Piece, assigns color, x and y
-        super(Pawn, self).__init__(col, x, y)
+        super(Pawn, self).__init__(col, x, y, letter)
 
     def is_valid_movement(self, x2, y2):
 
@@ -120,10 +122,10 @@ class Pawn(Game_Piece):
 
 class Rook(Game_Piece):
 
-    def __init__(self, col, x, y):
+    def __init__(self, col, x, y, letter):
 
         # the parent class, Game_Piece, assigns color, x and y
-        super(Rook, self).__init__(col, x, y)
+        super(Rook, self).__init__(col, x, y, letter)
 
     def is_valid_movement(self, x2, y2):
 
@@ -144,10 +146,10 @@ class Rook(Game_Piece):
 
 class Bishop(Game_Piece):
 
-    def __init__(self, col, x, y):
+    def __init__(self, col, x, y, letter):
 
         # the parent class, Game_Piece, assigns color, x and y
-        super(Bishop, self).__init__(col, x, y)
+        super(Bishop, self).__init__(col, x, y, letter)
 
     def is_valid_movement(self, x2, y2):
 
@@ -158,5 +160,20 @@ class Bishop(Game_Piece):
         # if the bishop will be moving horizontally
         if abs(self.x - x2) == abs(self.x - y2):
             return True
+
+        return False
+
+
+class King(Game_Piece):
+
+    # Skeleton for the King-class
+    def __init__(self, col, x, y, letter):
+
+        # the parent class, Game_Piece, assigns color, x and y
+        super(King, self).__init__(col, x, y, letter)
+
+    def is_valid_movement(self, x2, y2):
+
+        pass
 
         return False
