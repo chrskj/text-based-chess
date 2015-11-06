@@ -19,65 +19,18 @@ class GameBoard(object):
 
     def piece_setup(self, pos):
         """Sets up the individual pieces."""
-        for x in range(1, 7, 5):
-            C = 'B'
-            L = 'p'
-            if x == 6:
-                C = 'W'
-                L = 'P'
-            for y in range(8):
-                P = Pawn(C, x, y, L)
-                pos[P.x][P.y] = P.letter
-
-        for x in range(0, 8, 7):
-            C = 'B'
-            L = 'r'
-            if x == 7:
-                C = 'W'
-                L = 'R'
-            for y in range(0, 8, 7):
-                R = Rook(C, x, y, L)
-                pos[R.x][R.y] = R.letter
-
-        for x in range(0, 8, 7):
-            C = 'B'
-            L = 'n'
-            if x == 7:
-                C = 'W'
-                L = 'N'
-            for y in range(1, 7, 5):
-                N = Knight(C, x, y, L)
-                pos[N.x][N.y] = N.letter
-
-        for x in range(0, 8, 7):
-            C = 'B'
-            L = 'b'
-            if x == 7:
-                C = 'W'
-                L = 'B'
-            for y in range(2, 6, 3):
-                B = Bishop(C, x, y, L)
-                pos[B.x][B.y] = B.letter
-
-        for x in range(0, 8, 7):
-            C = 'B'
-            L = 'q'
-            if x == 7:
-                C = 'W'
-                L = 'Q'
-
-            Q = Queen(C, x, 3, L)
-            pos[Q.x][Q.y] = Q.letter
-
-        for x in range(0, 8, 7):
-            C = 'B'
-            L = 'k'
-            if x == 7:
-                C = 'W'
-                L = 'K'
-
-            K = King(C, x, 4, L)
-            pos[K.x][K.y] = K.letter
+        pieces = ['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R']
+        for x in (0, 1, 6, 7):
+            teller = -1
+            if x == 1 or x == 6:
+                for y in range(8):
+                    pos[6][y] = 'P'
+                    pos[1][y] = 'p'
+            else:
+                for y in range(8):
+                    teller += 1
+                    pos[x][y] = pieces[teller]
+                    pos[0][y] = pos[0][y].lower()
 
     def console_board(self, pos):
         """Visualizes the game board in the console."""
