@@ -1,7 +1,7 @@
 
 ######################## TO-DO ########################
 # - Make King class                                   #
-# - Probably something else                           #  
+# - Probably something else                           #
 #                                                     #
 # - When a move is attempted, a check must be made to #
 #   ensure that the destination does not contain a    #
@@ -12,18 +12,17 @@
 #######################################################
 # sjakkbrikker: bonde: P, tårn: R, hest: N, løper: B, konge: K, dronning: Q
 
+
 class Game_Piece:
 
     # parent class for game pieces, all game pieces will inherit from this one
 
-    def __init__(self, col, x, y, letter):
+    def __init__(self, col, x, y):
         # color 'W' or 'B'
         self.color = col
         # x and y in [0, 7]
         self.x = x
         self.y = y
-        # letter for piece
-        self.letter = letter
 
     def is_valid_movement(self, x2, y2):
         # if not moving at all
@@ -38,8 +37,9 @@ class Game_Piece:
 
 class Knight(Game_Piece):
 
-    def __init__(self, col, x, y, letter):
-        super(Knight, self).__init__(col, x, y, letter)
+    def __init__(self, col, x, y):
+        super(Knight, self).__init__(col, x, y)
+        self.letter = 'K'
 
     def is_valid_movement(self, x2, y2):
 
@@ -61,10 +61,11 @@ class Knight(Game_Piece):
 
 class Queen(Game_Piece):
 
-    def __init__(self, col, x, y, letter):
+    def __init__(self, col, x, y):
 
         # the parent class, Game_Piece, assigns color, x and y
-        super(Queen, self).__init__(col, x, y, letter)
+        super(Queen, self).__init__(col, x, y)
+        self.letter = 'Q'
 
     def is_valid_movement(self, x2, y2):
 
@@ -85,10 +86,11 @@ class Queen(Game_Piece):
 
 class Pawn(Game_Piece):
 
-    def __init__(self, col, x, y, letter):
+    def __init__(self, col, x, y):
 
         # the parent class, Game_Piece, assigns color, x and y
-        super(Pawn, self).__init__(col, x, y, letter)
+        super(Pawn, self).__init__(col, x, y)
+        self.letter = 'P'
 
     def is_valid_movement(self, x2, y2):
 
@@ -122,10 +124,11 @@ class Pawn(Game_Piece):
 
 class Rook(Game_Piece):
 
-    def __init__(self, col, x, y, letter):
+    def __init__(self, col, x, y):
 
         # the parent class, Game_Piece, assigns color, x and y
-        super(Rook, self).__init__(col, x, y, letter)
+        super(Rook, self).__init__(col, x, y)
+        self.letter = 'R'
 
     def is_valid_movement(self, x2, y2):
 
@@ -146,10 +149,11 @@ class Rook(Game_Piece):
 
 class Bishop(Game_Piece):
 
-    def __init__(self, col, x, y, letter):
+    def __init__(self, col, x, y):
 
         # the parent class, Game_Piece, assigns color, x and y
-        super(Bishop, self).__init__(col, x, y, letter)
+        super(Bishop, self).__init__(col, x, y)
+        self.letter = 'B'
 
     def is_valid_movement(self, x2, y2):
 
@@ -167,10 +171,12 @@ class Bishop(Game_Piece):
 class King(Game_Piece):
 
     # Skeleton for the King-class
-    def __init__(self, col, x, y, letter):
+
+    def __init__(self, col, x, y):
 
         # the parent class, Game_Piece, assigns color, x and y
-        super(King, self).__init__(col, x, y, letter)
+        super(King, self).__init__(col, x, y)
+        self.letter = 'K'
 
     def is_valid_movement(self, x2, y2):
 
