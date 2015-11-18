@@ -7,11 +7,54 @@ class GameBoard(object):
 
     def game_board(self):
         """Creates the board which will be used."""
-        brett = [1 for i in range(8)]
-        for i in range(8):
-            brett[i] = ['.' for l in range(8)]
+        brett = [['.' for l in range(8)] for i in range(8)]
 
+        # brettet initialiseres til matrise med kun None
+        # fylles inn av game_piece i piece_setup_raggiz
+        brett_raggiz = [[None for l in range(8)] for i in range(8)]
         return brett
+
+
+    def piece_setup_raggiz(self):
+        # bare ha objektene rett i brett
+        
+        brett[0][0] = Rook('W', 0, 0)
+        brett[0][7] = Rook('W', 0, 7)
+        brett[0][1] = Knight('W', 0, 1)
+        brett[0][6] = Knight('W', 0, 6)
+        brett[0][2] = Bishop('W', 0, 2)
+        brett[0][5] = Bishop('W', 0, 5)
+        brett[0][3] = Queen('W', 0, 3)
+        brett[0][4] = King('W', 0, 4)
+        for i in range(7):   # bønder
+            brett[0][i] = Pawn('W', 1, i)
+
+        brett[7][0] = Rook('W', 7, 0)
+        brett[7][7] = Rook('W', 7, 7)
+        brett[7][1] = Knight('W', 7, 1)
+        brett[7][6] = Knight('W', 7, 6)
+        brett[7][2] = Bishop('W', 7, 2)
+        brett[7][5] = Bishop('W', 7, 5)
+        brett[7][3] = Queen('W', 7, 3)
+        brett[7][4] = King('W', 7, 4)
+        for i in range(7):   # bønder
+            brett[6][i] = Pawn('W', 6, i)
+
+
+    def console_board_raggiz(self):
+        for rad in brett_raggiz:  # gå gjennom hver rad
+            for rute in rad:  # gå gjennom hver rute i raden
+                
+                # hvis det IKKE er None i ruten, dvs hvis det er Game_Piece der
+                if rute:
+                    # Game_Piece har en egen attribute .letter
+                    print( rute.letter )
+                # ellers, hvis det er None i ruten (den er tom)
+                else:
+                    print( '.' )
+
+                print('  ')  # sånn ting ikke står helt tett inntil hverandre
+            
 
     def piece_setup(self, pos):
         """Sets up the individual pieces. Each piece is its own object with the name of the gamepiece + its position.
