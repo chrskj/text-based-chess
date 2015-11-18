@@ -39,7 +39,7 @@ class Knight(Game_Piece):
 
     def __init__(self, col, x, y):
         super(Knight, self).__init__(col, x, y)
-        self.letter = 'K'
+        self.letter = 'N'
 
     def is_valid_movement(self, x2, y2):
 

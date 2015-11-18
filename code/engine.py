@@ -6,12 +6,13 @@ from user import *
 class Engine(object):
     def __init__(self):
         self.turn = 0
-        board = GameBoard()
+        board = GameBoard().piece_setup(GameBoard().game_board())
+        print(GameBoard().console_board(board[0]))
         self.player_white = User('W')
         self.player_black = User('B')
         while True:
             self.turn += 1
-            print(board.console_board(self.update(board)))
+            print(GameBoard().console_board(self.update(board[0])))
             if self.turn >= 10:
                 break
 
@@ -28,16 +29,11 @@ class Engine(object):
             black_choice = self.player_black.movement_input()
             choice_list = [int(black_choice[0]), int(black_choice[1]), int(black_choice[2]), int(black_choice[3])]
 
-        brikke_valg = board.pos[choice_list[0]][choice_list[1]]
-        print(brikke_valg)
-        brikke_plassering = board.pos[choice_list[2]][choice_list[3]]
-        print(brikke_plassering)
-        brikke_plassering = brikke_valg
-        brikke_valg = '.'
-        print(brikke_valg)
-        print(brikke_plassering)
-        print(board.pos)
+        board[choice_list[2]][choice_list[3]] = board[choice_list[0]][choice_list[1]]
+        board[choice_list[0]][choice_list[1]] = '.'
 
+
+        return board
 
 
 Engine()
