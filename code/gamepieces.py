@@ -1,3 +1,4 @@
+# *-* coding: UTF-8 *-*
 
 ######################## TO-DO ########################
 # - Make King class                                   #
@@ -10,10 +11,10 @@
 # - Must also check for check or checkmate (again,    #
 #   not in this class)                                #
 #######################################################
-# sjakkbrikker: bonde: P, tårn: R, hest: N, løper: B, konge: K, dronning: Q
+# sjakkbrikker: bonde: P, tÃ¥rn: R, hest: N, lÃ¸per: B, konge: K, dronning: Q
 
 
-class Game_Piece:
+class Game_Piece(object):
 
     # parent class for game pieces, all game pieces will inherit from this one
 
@@ -101,9 +102,9 @@ class Pawn(Game_Piece):
         # using 'thing' to avoid processing each color on its own, which
         # would lead to a lot of duplicate code.
         if self.color == 'W':
-            thing = -1
-        else:
             thing = 1
+        else:
+            thing = -1
 
         # if move forward (x unchanged)
         if self.x == x2:
