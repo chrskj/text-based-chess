@@ -101,9 +101,9 @@ class Pawn(Game_Piece):
         # using 'thing' to avoid processing each color on its own, which
         # would lead to a lot of duplicate code.
         if self.color == 'W':
-            thing = 1
-        else:
             thing = -1
+        else:
+            thing = 1
 
         # if move forward (x unchanged)
         if self.x == x2:
