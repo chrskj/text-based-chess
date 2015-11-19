@@ -10,13 +10,13 @@ class Engine(object):
         self.board = GameBoard()
         self.sjakkbrett = self.board.brett
 
-        print(self.board.console_board_new())
+        print(self.board.console_board())
 
         self.player_white = User('W')
         self.player_black = User('B')
         while True:
             self.update()
-            print(self.board.console_board_new())
+            print(self.board.console_board())
 
     def update(self):
         """Spør bruker om flytting av brikker og oppdaterer brettet."""
@@ -64,7 +64,7 @@ class Engine(object):
                 continue
             if brikke_flyttes.is_valid_movement(toX, toY):
                 print(
-                    'Moving %s from (%i,%i) to (%i,%i). Valid move!' % (brikke_flyttes.letter, fromX, fromY, toX, toY))
+                    'Moving %s from (%i,%i) to (%i,%i)!' % (brikke_flyttes.letter, fromX, fromY, toX, toY))
                 self.sjakkbrett[fromX][fromY] = None
                 brikke_flyttes.x = toX # chrskj: x og y-verdien må oppdateres...
                 brikke_flyttes.y = toY # chrskj: x og y-verdien må oppdateres...
@@ -72,7 +72,7 @@ class Engine(object):
                 self.sjakkbrett[toX][toY] = brikke_flyttes
                 input_ikke_valid = False
             else:
-                print('Invalid move! Try again nigga')
+                print('Hah, prøv igjen.')
                 # input_ikke_valid er fremdeles True, så loopen kjøres igjen
 
 

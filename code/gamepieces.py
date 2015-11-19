@@ -53,6 +53,8 @@ class Knight(Game_Piece):
         # the four moves "up" and "down"
         if abs(x2 - self.x) == 1 and abs(y2 - self.y) == 2:
             return True
+        print('Sides: x2 - x = 2:', x2, '-', self.x, '=', 2, 'og y2 - y = 1:', y2, '-', self.y, '=', 1)
+        print('Up/down: x2 - x = 1:', x2, '-', self.x, '=', 1, 'og y2 - y = 2:', y2, '-', self.y, '=', 2)
 
         # if not any of the eight moves above, we've exhausted our options
         return False
@@ -78,6 +80,7 @@ class Queen(Game_Piece):
         # if straight moving, x or y stays put, the other moves
         if (x2 == self.x and y2 != self.y) or (y2 == self.y and x2 != self.x):
             return True
+
 
         return False
 
@@ -160,7 +163,7 @@ class Bishop(Game_Piece):
             return False
 
         # if the bishop will be moving horizontally
-        if abs(self.x - x2) == abs(self.x - y2):
+        if abs(self.x - x2) == abs(self.y - y2):
             return True
 
         return False
