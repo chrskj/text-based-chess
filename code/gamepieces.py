@@ -15,7 +15,6 @@
 
 
 class Game_Piece(object):
-
     # parent class for game pieces, all game pieces will inherit from this one
 
     def __init__(self, col, x, y):
@@ -37,7 +36,6 @@ class Game_Piece(object):
 
 
 class Knight(Game_Piece):
-
     def __init__(self, col, x, y):
         super(Knight, self).__init__(col, x, y)
         self.letter = 'N'
@@ -61,7 +59,6 @@ class Knight(Game_Piece):
 
 
 class Queen(Game_Piece):
-
     def __init__(self, col, x, y):
 
         # the parent class, Game_Piece, assigns color, x and y
@@ -86,7 +83,6 @@ class Queen(Game_Piece):
 
 
 class Pawn(Game_Piece):
-
     def __init__(self, col, x, y):
 
         # the parent class, Game_Piece, assigns color, x and y
@@ -120,11 +116,13 @@ class Pawn(Game_Piece):
         if y2 - self.y == 1 * thing and abs(x2 - self.x) == 1:
             return True
 
+        print('Dette må stemme for å flytte:', self.x, '=x/x2=', x2)
+        print('Dette må stemme for å angripe:', y2, '-', self.y, '=y2-y/1=', 1 * thing, 'og', abs(x2 - self.x),
+              '=x2-x/1=', 1)
         return False
 
 
 class Rook(Game_Piece):
-
     def __init__(self, col, x, y):
 
         # the parent class, Game_Piece, assigns color, x and y
@@ -149,7 +147,6 @@ class Rook(Game_Piece):
 
 
 class Bishop(Game_Piece):
-
     def __init__(self, col, x, y):
 
         # the parent class, Game_Piece, assigns color, x and y
@@ -170,17 +167,14 @@ class Bishop(Game_Piece):
 
 
 class King(Game_Piece):
-
     # Skeleton for the King-class
 
     def __init__(self, col, x, y):
-
         # the parent class, Game_Piece, assigns color, x and y
         super(King, self).__init__(col, x, y)
         self.letter = 'K'
 
     def is_valid_movement(self, x2, y2):
-
         pass
 
         return False
