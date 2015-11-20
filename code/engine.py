@@ -12,6 +12,8 @@ from user import *
 #   probably in the "Game" class)                     #
 # - Must also check for check or checkmate (again,    #
 #   not in this class)                                #
+# - Forhindre at motspillere kan bruke hverandres     #
+#   brikker                                           #
 #######################################################
 
 class Engine(object):
@@ -77,7 +79,7 @@ class Engine(object):
                     continue
             except AttributeError:
                 pass
-            if brikke_flyttes.is_valid_movement(toX, toY):
+            if brikke_flyttes.is_valid_movement(toX, toY, self.sjakkbrett):
                 print(
                     'Moving %s from (%i,%i) to (%i,%i)!' % (brikke_flyttes.letter, fromX, fromY, toX, toY))
                 self.sjakkbrett[fromX][fromY] = None
