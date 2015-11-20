@@ -72,7 +72,7 @@ class Engine(object):
                 self.sjakkbrett[toX][toY] = brikke_flyttes
                 input_ikke_valid = False
             else:
-                print('Hah, prøv igjen.')
+                print('Invalid move. Try again nigga!')
                 # input_ikke_valid er fremdeles True, så loopen kjøres igjen
 
 
