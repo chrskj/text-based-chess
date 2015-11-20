@@ -71,6 +71,12 @@ class Engine(object):
             if not brikke_flyttes:  # hvis du valgte tom rute
                 print('Deeeet var en tom rute.')
                 continue
+            try: # Prøver å finne color-verdien til valt brikke og destinasjon
+                if brikke_flyttes.color == self.sjakkbrett[toX][toY].color:
+                    print('Hey, det e fienden du sga dreba!')
+                    continue
+            except AttributeError:
+                pass
             if brikke_flyttes.is_valid_movement(toX, toY):
                 print(
                     'Moving %s from (%i,%i) to (%i,%i)!' % (brikke_flyttes.letter, fromX, fromY, toX, toY))
