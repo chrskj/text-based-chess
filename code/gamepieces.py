@@ -1,18 +1,5 @@
 # *-* coding: UTF-8 *-*
-
-######################## TO-DO ########################
-# - Make King class                                   #
-# - Probably something else                           #
-#                                                     #
-# - When a move is attempted, a check must be made to #
-#   ensure that the destination does not contain a    #
-#   piece of the same color (NOT in this class,       #
-#   probably in the "Game" class)                     #
-# - Must also check for check or checkmate (again,    #
-#   not in this class)                                #
-#######################################################
-# sjakkbrikker: bonde: P, tÃ¥rn: R, hest: N, lÃ¸per: B, konge: K, dronning: Q
-
+# sjakkbrikker: bonde: P, tÅrn: R, hest: N, løper: B, konge: K, dronning: Q
 
 class Game_Piece(object):
     # parent class for game pieces, all game pieces will inherit from this one
@@ -81,7 +68,6 @@ class Queen(Game_Piece):
         if (x2 == self.x and y2 != self.y) or (y2 == self.y and x2 != self.x):
             return True
 
-
         return False
 
 
@@ -131,6 +117,7 @@ class Rook(Game_Piece):
         # the parent class, Game_Piece, assigns color, x and y
         super(Rook, self).__init__(col, x, y)
         self.letter = 'R'
+        self.has_moved = False
 
     def is_valid_movement(self, x2, y2):
 
@@ -140,10 +127,12 @@ class Rook(Game_Piece):
 
         # if moving horizontally
         if abs(self.x - x2) > 0 and self.y == y2:
+            self.has_moved = True
             return True
 
         # if moving vertically
         if self.x == x2 and abs(self.y - y2) > 0:
+            self.has_moved = True
             return True
 
         return False
@@ -176,8 +165,39 @@ class King(Game_Piece):
         # the parent class, Game_Piece, assigns color, x and y
         super(King, self).__init__(col, x, y)
         self.letter = 'K'
+        self.has_moved = False
 
     def is_valid_movement(self, x2, y2):
-        pass
+
+        # not outside board
+        if not super(King, self).is_valid_movement(x2, y2):
+            return False
+
+        # Diagonal movement for the king
+        if abs(x2 - self.x) == 1 and abs(y2 - self.y) == 1:
+            self.has_moved = True
+            return True
+
+        # up/down-movement for the king
+        if x2 == self.x and abs(y2 - self.y) == 1:
+            self.has_moved = True
+            return True
+
+        # left/right-movement for the king
+        if y2 == self.y and abs(x2 - self.x) == 1:
+            self.has_moved = True
+            return True
+
+        # If first move
+        if not self.has_moved:
+            # Kort rokade!
+            if self.y == y2 and x2 - self.x == 2:
+                self.has_moved = True
+                return True
+
+            # Lang rokade!
+            if self.y == y2 and self.x - x2 == 3:
+                self.has_moved = True
+                return True
 
         return False

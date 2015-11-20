@@ -3,6 +3,16 @@ from gameboard import *
 from gamepieces import *
 from user import *
 
+######################## TO-DO ########################
+# - Unngå at tårn, løper og dronning hopper over      #
+#   andre brikker                                     #
+# - When a move is attempted, a check must be made to #
+#   ensure that the destination does not contain a    #
+#   piece of the same color (NOT in this class,       #
+#   probably in the "Game" class)                     #
+# - Must also check for check or checkmate (again,    #
+#   not in this class)                                #
+#######################################################
 
 class Engine(object):
     def __init__(self):
@@ -57,7 +67,6 @@ class Engine(object):
                 toX = int(black_choice[2])
                 toY = int(black_choice[3])
 
-            # skjønte ikkje heilt det under, prøve bare min egen litt enklere/finere
             brikke_flyttes = self.sjakkbrett[fromX][fromY]
             if not brikke_flyttes:  # hvis du valgte tom rute
                 print('Deeeet var en tom rute.')
