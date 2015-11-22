@@ -60,10 +60,50 @@ class Queen(Game_Piece):
 
         # if diagonal moving, x and y change by +- the same amount
         if abs(x2 - self.x) == abs(y2 - self.y):
+            if x2 - self.x > 0 and y2 - self.y > 0:
+                for i in range(1, x2 - self.x):
+                    if brett[self.x + i][self.y + i]:
+                        print('Det va visst noge imellom her.')
+                        return False
+            if x2 - self.x < 0 and y2 - self.y > 0:
+                for i in range(1, self.x - x2):
+                    if brett[self.x - i][self.y + i]:
+                        print('Det va visst noge imellom her.')
+                        return False
+            if x2 - self.x > 0 and y2 - self.y < 0:
+                for i in range(1, x2 - self.x):
+                    if brett[self.x + i][self.y - i]:
+                        print('Det va visst noge imellom her.')
+                        return False
+            if x2 - self.x < 0 and y2 - self.y < 0:
+                for i in range(1, self.x - x2):
+                    if brett[self.x - i][self.y - i]:
+                        print('Det va visst noge imellom her.')
+                        return False
             return True
 
         # if straight moving, x or y stays put, the other moves
         if (x2 == self.x and y2 != self.y) or (y2 == self.y and x2 != self.x):
+            if x2 - self.x > 0:  # End more to the right than start
+                for i in range(1, x2 - self.x):
+                    if brett[x2 - i][self.y]:
+                        print('Det va visst noge imellom her.')
+                        return False
+            if self.x - x2 > 0:  # Start more to the right than end
+                for i in range(1, self.x - x2):
+                    if brett[self.x - i][self.y]:
+                        print('Det va visst noge imellom her.')
+                        return False
+            if y2 - self.y > 0:  # End higher up than start
+                for i in range(1, y2 - self.y):
+                    if brett[self.x][y2 - i]:
+                        print('Det va visst noge imellom her.')
+                        return False
+            if self.y - y2 > 0:  # Start higher up than end
+                for i in range(1, self.y - y2):
+                    if brett[self.x][self.y - i]:
+                        print('Det va visst noge imellom her.')
+                        return False
             return True
 
         return False
@@ -120,13 +160,28 @@ class Rook(Game_Piece):
         if not super(Rook, self).is_valid_movement(x2, y2, brett):
             return False
 
-        # if moving horizontally
-        if abs(self.x - x2) > 0 and self.y == y2:
-            self.has_moved = True
-            return True
-
-        # if moving vertically
-        if self.x == x2 and abs(self.y - y2) > 0:
+        # if straight moving, x or y stays put, the other moves
+        if (x2 == self.x and y2 != self.y) or (y2 == self.y and x2 != self.x):
+            if x2 - self.x > 0:  # End more to the right than start
+                for i in range(1, x2 - self.x):
+                    if brett[x2 - i][self.y]:
+                        print('Det va visst noge imellom her.')
+                        return False
+            if self.x - x2 > 0:  # Start more to the right than end
+                for i in range(1, self.x - x2):
+                    if brett[self.x - i][self.y]:
+                        print('Det va visst noge imellom her.')
+                        return False
+            if y2 - self.y > 0:  # End higher up than start
+                for i in range(1, y2 - self.y):
+                    if brett[self.x][y2 - i]:
+                        print('Det va visst noge imellom her.')
+                        return False
+            if self.y - y2 > 0:  # Start higher up than end
+                for i in range(1, self.y - y2):
+                    if brett[self.x][self.y - i]:
+                        print('Det va visst noge imellom her.')
+                        return False
             self.has_moved = True
             return True
 
@@ -146,8 +201,27 @@ class Bishop(Game_Piece):
         if not super(Bishop, self).is_valid_movement(x2, y2, brett):
             return False
 
-        # if the bishop will be moving horizontally
-        if abs(self.x - x2) == abs(self.y - y2):
+        if abs(x2 - self.x) == abs(y2 - self.y):
+            if x2 - self.x > 0 and y2 - self.y > 0:
+                for i in range(1, x2 - self.x):
+                    if brett[self.x + i][self.y + i]:
+                        print('Det va visst noge imellom her.')
+                        return False
+            if x2 - self.x < 0 and y2 - self.y > 0:
+                for i in range(1, self.x - x2):
+                    if brett[self.x - i][self.y + i]:
+                        print('Det va visst noge imellom her.')
+                        return False
+            if x2 - self.x > 0 and y2 - self.y < 0:
+                for i in range(1, x2 - self.x):
+                    if brett[self.x + i][self.y - i]:
+                        print('Det va visst noge imellom her.')
+                        return False
+            if x2 - self.x < 0 and y2 - self.y < 0:
+                for i in range(1, self.x - x2):
+                    if brett[self.x - i][self.y - i]:
+                        print('Det va visst noge imellom her.')
+                        return False
             return True
 
         return False

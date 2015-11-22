@@ -3,18 +3,10 @@ from gameboard import *
 from gamepieces import *
 from user import *
 
-######################## TO-DO ########################
-# - Unngå at tårn, løper og dronning hopper over      #
-#   andre brikker                                     #
-# - When a move is attempted, a check must be made to #
-#   ensure that the destination does not contain a    #
-#   piece of the same color (NOT in this class,       #
-#   probably in the "Game" class)                     #
-# - Must also check for check or checkmate (again,    #
-#   not in this class)                                #
-# - Forhindre at motspillere kan bruke hverandres     #
-#   brikker                                           #
-#######################################################
+# - Unngå at tårn, løper og dronning hopper over
+#   andre brikker
+# - Must also check for check or checkmate (again,
+#   not in this class)
 
 class Engine(object):
     def __init__(self):
@@ -70,21 +62,28 @@ class Engine(object):
                 toY = int(black_choice[3])
 
             brikke_flyttes = self.sjakkbrett[fromX][fromY]
+
+            if self.turn % 2 and brikke_flyttes.color == "B": # Hvis hvit prøver å styre svarte brikker
+                print('Styr dine egne brikker du...')
+                continue
+            if not self.turn % 2 and brikke_flyttes.color == "W": # Hvis svart prøver å styre hvite brikker
+                print('Styr dine egne brikker du...')
+                continue
             if not brikke_flyttes:  # hvis du valgte tom rute
                 print('Deeeet var en tom rute.')
                 continue
-            try: # Prøver å finne color-verdien til valt brikke og destinasjon
+            try: # Hvis valgt destinasjon inneholder friendly piece
                 if brikke_flyttes.color == self.sjakkbrett[toX][toY].color:
                     print('Hey, det e fienden du sga dreba!')
                     continue
             except AttributeError:
                 pass
-            if brikke_flyttes.is_valid_movement(toX, toY, self.sjakkbrett):
+            if brikke_flyttes.is_valid_movement(toX, toY, self.sjakkbrett): # Hvis valid movement
                 print(
                     'Moving %s from (%i,%i) to (%i,%i)!' % (brikke_flyttes.letter, fromX, fromY, toX, toY))
                 self.sjakkbrett[fromX][fromY] = None
-                brikke_flyttes.x = toX # chrskj: x og y-verdien må oppdateres...
-                brikke_flyttes.y = toY # chrskj: x og y-verdien må oppdateres...
+                brikke_flyttes.x = toX # x-verdien til objektet oppdateres...
+                brikke_flyttes.y = toY # y-verdien til objektet oppdateres...
                 # her må det til validering da, at vi ikke tar vår egen brikker m.m.
                 self.sjakkbrett[toX][toY] = brikke_flyttes
                 input_ikke_valid = False

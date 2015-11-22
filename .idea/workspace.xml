@@ -17,10 +17,11 @@
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/text-based-chess$asd.coverage" NAME="asd Coverage Results" MODIFIED="1448032495901" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/code" />
     <SUITE FILE_PATH="coverage/text-based-chess$chessboard.coverage" NAME="chessboard Coverage Results" MODIFIED="1447234614989" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/code" />
     <SUITE FILE_PATH="coverage/text-based-chess$Game_Board.coverage" NAME="Game Board Coverage Results" MODIFIED="1448007934076" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/code" />
     <SUITE FILE_PATH="coverage/text-based-chess$gamepieces.coverage" NAME="gamepieces Coverage Results" MODIFIED="1447965947073" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/code" />
-    <SUITE FILE_PATH="coverage/text-based-chess$Engine.coverage" NAME="Engine Coverage Results" MODIFIED="1448011882184" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/code" />
+    <SUITE FILE_PATH="coverage/text-based-chess$Engine.coverage" NAME="Engine Coverage Results" MODIFIED="1448192802312" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/code" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -31,12 +32,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="gamepieces.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/code/gamepieces.py">
+      <file leaf-file-name="engine.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/code/engine.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5802338">
-              <caret line="26" column="47" selection-start-line="26" selection-start-column="47" selection-end-line="26" selection-end-column="47" />
-              <folding />
+            <state vertical-scroll-proportion="0.44633368">
+              <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
+              <folding>
+                <element signature="e#24#47#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -67,6 +70,7 @@
         <option value="$PROJECT_DIR$/code/gameboard.py" />
         <option value="$PROJECT_DIR$/code/user.py" />
         <option value="$PROJECT_DIR$/code/engine.py" />
+        <option value="$PROJECT_DIR$/code/asd.py" />
         <option value="$PROJECT_DIR$/code/gamepieces.py" />
       </list>
     </option>
@@ -106,8 +110,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -196,24 +200,6 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="userinput" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/code" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="text-based-chess" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/code/user.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
     <configuration default="false" name="chessboard" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -246,6 +232,24 @@
       <module name="text-based-chess" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/code/gamepieces.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="asd" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/code" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="text-based-chess" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/code/asd.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -446,17 +450,17 @@
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.Game Board" />
       <item index="1" class="java.lang.String" itemvalue="Python.Engine" />
-      <item index="2" class="java.lang.String" itemvalue="Python.userinput" />
-      <item index="3" class="java.lang.String" itemvalue="Python.chessboard" />
-      <item index="4" class="java.lang.String" itemvalue="Python.gamepieces" />
+      <item index="2" class="java.lang.String" itemvalue="Python.chessboard" />
+      <item index="3" class="java.lang.String" itemvalue="Python.gamepieces" />
+      <item index="4" class="java.lang.String" itemvalue="Python.asd" />
     </list>
     <recent_temporary>
       <list size="5">
         <item index="0" class="java.lang.String" itemvalue="Python.Engine" />
-        <item index="1" class="java.lang.String" itemvalue="Python.Game Board" />
-        <item index="2" class="java.lang.String" itemvalue="Python.gamepieces" />
-        <item index="3" class="java.lang.String" itemvalue="Python.chessboard" />
-        <item index="4" class="java.lang.String" itemvalue="Python.userinput" />
+        <item index="1" class="java.lang.String" itemvalue="Python.asd" />
+        <item index="2" class="java.lang.String" itemvalue="Python.Game Board" />
+        <item index="3" class="java.lang.String" itemvalue="Python.gamepieces" />
+        <item index="4" class="java.lang.String" itemvalue="Python.chessboard" />
       </list>
     </recent_temporary>
   </component>
@@ -533,10 +537,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="21" column="19" selection-start-line="21" selection-start-column="19" selection-end-line="21" selection-end-column="19" />
           <folding>
-            <marker date="1448011882177" expanded="true" signature="24:91" placeholder="import ..." />
-            <marker date="1448011882177" expanded="true" signature="787:3930" placeholder="..." />
-            <marker date="1448011882177" expanded="true" signature="811:1121" placeholder="..." />
-            <marker date="1448011882177" expanded="true" signature="1144:3930" placeholder="..." />
+            <element signature="e#24#47#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -546,10 +547,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="48" column="46" selection-start-line="48" selection-start-column="46" selection-end-line="48" selection-end-column="46" />
           <folding>
-            <marker date="1448011882177" expanded="true" signature="24:91" placeholder="import ..." />
-            <marker date="1448011882177" expanded="true" signature="787:3930" placeholder="..." />
-            <marker date="1448011882177" expanded="true" signature="811:1121" placeholder="..." />
-            <marker date="1448011882177" expanded="true" signature="1144:3930" placeholder="..." />
+            <element signature="e#24#47#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -559,10 +557,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="14" column="47" selection-start-line="14" selection-start-column="47" selection-end-line="14" selection-end-column="47" />
           <folding>
-            <marker date="1448011882177" expanded="true" signature="24:91" placeholder="import ..." />
-            <marker date="1448011882177" expanded="true" signature="787:3930" placeholder="..." />
-            <marker date="1448011882177" expanded="true" signature="811:1121" placeholder="..." />
-            <marker date="1448011882177" expanded="true" signature="1144:3930" placeholder="..." />
+            <element signature="e#24#47#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -572,10 +567,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="23" selection-start-line="0" selection-start-column="23" selection-end-line="17" selection-end-column="0" />
           <folding>
-            <marker date="1448011882177" expanded="true" signature="24:91" placeholder="import ..." />
-            <marker date="1448011882177" expanded="true" signature="787:3930" placeholder="..." />
-            <marker date="1448011882177" expanded="true" signature="811:1121" placeholder="..." />
-            <marker date="1448011882177" expanded="true" signature="1144:3930" placeholder="..." />
+            <element signature="e#24#47#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -585,10 +577,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
           <folding>
-            <marker date="1448011882177" expanded="true" signature="24:91" placeholder="import ..." />
-            <marker date="1448011882177" expanded="true" signature="787:3930" placeholder="..." />
-            <marker date="1448011882177" expanded="true" signature="811:1121" placeholder="..." />
-            <marker date="1448011882177" expanded="true" signature="1144:3930" placeholder="..." />
+            <element signature="e#24#47#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -605,10 +594,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
           <folding>
-            <marker date="1448011882177" expanded="true" signature="24:91" placeholder="import ..." />
-            <marker date="1448011882177" expanded="true" signature="787:3930" placeholder="..." />
-            <marker date="1448011882177" expanded="true" signature="811:1121" placeholder="..." />
-            <marker date="1448011882177" expanded="true" signature="1144:3930" placeholder="..." />
+            <element signature="e#24#47#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -638,10 +624,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
           <folding>
-            <marker date="1448011882177" expanded="true" signature="24:91" placeholder="import ..." />
-            <marker date="1448011882177" expanded="true" signature="787:3930" placeholder="..." />
-            <marker date="1448011882177" expanded="true" signature="811:1121" placeholder="..." />
-            <marker date="1448011882177" expanded="true" signature="1144:3930" placeholder="..." />
+            <element signature="e#24#47#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -651,10 +634,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="28" column="8" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
           <folding>
-            <marker date="1448011882177" expanded="true" signature="24:91" placeholder="import ..." />
-            <marker date="1448011882177" expanded="true" signature="787:3930" placeholder="..." />
-            <marker date="1448011882177" expanded="true" signature="811:1121" placeholder="..." />
-            <marker date="1448011882177" expanded="true" signature="1144:3930" placeholder="..." />
+            <element signature="e#24#47#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -678,10 +658,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1448011882177" expanded="true" signature="24:91" placeholder="import ..." />
-            <marker date="1448011882177" expanded="true" signature="787:3930" placeholder="..." />
-            <marker date="1448011882177" expanded="true" signature="811:1121" placeholder="..." />
-            <marker date="1448011882177" expanded="true" signature="1144:3930" placeholder="..." />
+            <element signature="e#24#47#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -712,19 +689,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/code/gameboard.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6918172">
-          <caret line="31" column="41" selection-start-line="31" selection-start-column="41" selection-end-line="31" selection-end-column="41" />
-          <folding>
-            <marker date="1447971292779" expanded="true" signature="154:2405" placeholder="..." />
-            <marker date="1447971292779" expanded="true" signature="262:513" placeholder="..." />
-            <marker date="1447971292779" expanded="true" signature="541:1458" placeholder="..." />
-            <marker date="1447971292779" expanded="true" signature="1488:2405" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/code/chessboard.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.11158342">
@@ -740,24 +704,56 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/code/engine.py">
+    <entry file="file://$PROJECT_DIR$/code/gameboard.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6429331">
-          <caret line="86" column="45" selection-start-line="86" selection-start-column="45" selection-end-line="86" selection-end-column="45" />
+        <state vertical-scroll-proportion="0.6918172">
+          <caret line="31" column="41" selection-start-line="31" selection-start-column="41" selection-end-line="31" selection-end-column="41" />
           <folding>
-            <marker date="1448011882177" expanded="true" signature="24:91" placeholder="import ..." />
-            <marker date="1448011882177" expanded="true" signature="787:3930" placeholder="..." />
-            <marker date="1448011882177" expanded="true" signature="811:1121" placeholder="..." />
-            <marker date="1448011882177" expanded="true" signature="1144:3930" placeholder="..." />
+            <marker date="1447971292779" expanded="true" signature="154:2405" placeholder="..." />
+            <marker date="1447971292779" expanded="true" signature="262:513" placeholder="..." />
+            <marker date="1447971292779" expanded="true" signature="541:1458" placeholder="..." />
+            <marker date="1447971292779" expanded="true" signature="1488:2405" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/code/gamepieces.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5802338">
-          <caret line="26" column="47" selection-start-line="26" selection-start-column="47" selection-end-line="26" selection-end-column="47" />
-          <folding />
+        <state vertical-scroll-proportion="5.780021">
+          <caret line="259" column="23" selection-start-line="259" selection-start-column="23" selection-end-line="259" selection-end-column="23" />
+          <folding>
+            <marker date="1448192802310" expanded="true" signature="126:650" placeholder="..." />
+            <marker date="1448192802310" expanded="true" signature="241:359" placeholder="..." />
+            <marker date="1448192802310" expanded="true" signature="408:650" placeholder="..." />
+            <marker date="1448192802310" expanded="true" signature="678:1342" placeholder="..." />
+            <marker date="1448192802310" expanded="true" signature="713:787" placeholder="..." />
+            <marker date="1448192802310" expanded="true" signature="836:1342" placeholder="..." />
+            <marker date="1448192802310" expanded="true" signature="1369:4107" placeholder="..." />
+            <marker date="1448192802310" expanded="true" signature="1404:1541" placeholder="..." />
+            <marker date="1448192802310" expanded="true" signature="1590:4107" placeholder="..." />
+            <marker date="1448192802310" expanded="true" signature="4133:5182" placeholder="..." />
+            <marker date="1448192802310" expanded="true" signature="4168:4304" placeholder="..." />
+            <marker date="1448192802310" expanded="true" signature="4353:5182" placeholder="..." />
+            <marker date="1448192802310" expanded="true" signature="5208:6848" placeholder="..." />
+            <marker date="1448192802310" expanded="true" signature="5243:5410" placeholder="..." />
+            <marker date="1448192802310" expanded="true" signature="5459:6848" placeholder="..." />
+            <marker date="1448192802310" expanded="true" signature="6876:8337" placeholder="..." />
+            <marker date="1448192802310" expanded="true" signature="6911:7049" placeholder="..." />
+            <marker date="1448192802310" expanded="true" signature="7098:8337" placeholder="..." />
+            <marker date="1448192802310" expanded="true" signature="8363:10127" placeholder="..." />
+            <marker date="1448192802310" expanded="true" signature="8433:8599" placeholder="..." />
+            <marker date="1448192802310" expanded="true" signature="8648:10127" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/engine.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.44633368">
+          <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
+          <folding>
+            <element signature="e#24#47#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
