@@ -14,32 +14,25 @@ class Engine(object):
         self.turn = 0
         self.board = GameBoard()
         self.sjakkbrett = self.board.brett
-
-        print(self.board.console_board())
-
         self.player_white = User('W')
         self.player_black = User('B')
+
         while True:
+            print(self.board.console_board())  # Visualiserer brettet i konsollen
             if self.update() == 'surrender':  # Spillet slutter hvis en av spillerene skriver 'surrender'
                 break
-            self.update()
-            print(self.board.console_board())
         print(self.history)  # Printer ut alle trekkene som har blitt gjort
 
     def update(self):
         """Spør bruker om flytting av brikker og oppdaterer brettet."""
         self.turn += 1
         print("========================================")
-
-        # input_ikke_valid er bare en ting som gjør at vi veldig enkelt kan
-        # hoppe tilbake hit hvis dusten gir inn et invalid move. Slipper
-        # å trekke fra turns og greier. Hvis trekket er valid, setter vi
-        # bare input_ikke_valid til False, og går da ut av while-loopen
-
         input_ikke_valid = True
-        while input_ikke_valid:
 
+        while input_ikke_valid:
             print('TURN NUMMER ', self.turn)
+
+            # ===============================================================================================
 
             # Hvit sin tur på oddetallsrunder, og motsatt for svart
             if self.turn % 2:
@@ -73,6 +66,8 @@ class Engine(object):
                 toY = int(black_choice[3])
                 history = black_choice[4]
 
+            # ===============================================================================================
+
             brikke_flyttes = self.sjakkbrett[fromX][fromY]
 
             if self.turn % 2 and brikke_flyttes.color == "B":  # Hvis hvit prøver å styre svarte brikker
@@ -90,6 +85,7 @@ class Engine(object):
                     continue
             except AttributeError:
                 pass
+
             if brikke_flyttes.is_valid_movement(toX, toY, self.sjakkbrett):  # Hvis valid movement
                 print(
                     'Moving %s from (%i,%i) to (%i,%i)!' % (brikke_flyttes.letter, fromX, fromY, toX, toY))
@@ -98,11 +94,13 @@ class Engine(object):
                 brikke_flyttes.y = toY  # y-verdien til objektet oppdateres...
                 # her må det til validering da, at vi ikke tar vår egen brikker m.m.
                 self.sjakkbrett[toX][toY] = brikke_flyttes
-                input_ikke_valid = False
                 self.history.append(history)  # Trekket som ble gjort lagres i history-listen
+                input_ikke_valid = False
+
             else:
                 print('Invalid move. Try again nigga!')
                 # input_ikke_valid er fremdeles True, så loopen kjøres igjen
 
+                # ===============================================================================================
 
 Engine()
