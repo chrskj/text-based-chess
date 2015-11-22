@@ -141,6 +141,10 @@ class Pawn(Game_Piece):
         # if taking something (
         # diagonal, x changes by +-1, y changes by thing*1)
         if y2 - self.y == 1 * thing and abs(x2 - self.x) == 1:
+
+            if not brett[x2][y2]:
+                print('Ingenting å angripe...')
+                return False
             return True
 
         return False
