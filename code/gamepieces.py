@@ -11,7 +11,7 @@ class Game_Piece(object):
         self.x = x
         self.y = y
 
-    def is_valid_movement(self, x2, y2, brett):
+    def is_valid_movement(self, x2, y2, brett, history):
         # if not moving at all
         if self.x == x2 and self.y == y2:
             return False
@@ -27,10 +27,10 @@ class Knight(Game_Piece):
         super(Knight, self).__init__(col, x, y)
         self.letter = 'N'
 
-    def is_valid_movement(self, x2, y2, brett):
+    def is_valid_movement(self, x2, y2, brett, history):
 
         # if the movement-generalistics (e det et ord?) are ok
-        if not super(Knight, self).is_valid_movement(x2, y2, brett):
+        if not super(Knight, self).is_valid_movement(x2, y2, brett, history):
             return False
 
         # the four moves to the "sides"
@@ -52,10 +52,10 @@ class Queen(Game_Piece):
         super(Queen, self).__init__(col, x, y)
         self.letter = 'Q'
 
-    def is_valid_movement(self, x2, y2, brett):
+    def is_valid_movement(self, x2, y2, brett, history):
 
         # not outside board
-        if not super(Queen, self).is_valid_movement(x2, y2, brett):
+        if not super(Queen, self).is_valid_movement(x2, y2, brett, history):
             return False
 
         # if diagonal moving, x and y change by +- the same amount
@@ -116,10 +116,10 @@ class Pawn(Game_Piece):
         super(Pawn, self).__init__(col, x, y)
         self.letter = 'P'
 
-    def is_valid_movement(self, x2, y2, brett):
+    def is_valid_movement(self, x2, y2, brett, history):
 
         # not outside board
-        if not super(Pawn, self).is_valid_movement(x2, y2, brett):
+        if not super(Pawn, self).is_valid_movement(x2, y2, brett, history):
             return False
 
         # using 'thing' to avoid processing each color on its own, which
@@ -138,11 +138,16 @@ class Pawn(Game_Piece):
             if y2 - self.y == 2 * thing and (self.y == 1 or self.y == 6):
                 return True
 
+        # 0,3,4,9,10
         # if taking something (
         # diagonal, x changes by +-1, y changes by thing*1)
         if y2 - self.y == 1 * thing and abs(x2 - self.x) == 1:
-
             if not brett[x2][y2]:
+                # En pasant!
+                # hvis y2 = 2 eller 5 og forrige trekk beveget seg to steg fremover og er på samme x-verdi som deg
+                if (y2 == 2 or y2 == 5) and int(history[-1][10]) - int(history[-1][4]) == 2 * -thing and ord(history[-1][9]) - 65 == x2:
+                    brett[x2][y2 - thing] = None
+                    return True
                 print('Ingenting å angripe...')
                 return False
             return True
@@ -158,10 +163,10 @@ class Rook(Game_Piece):
         self.letter = 'R'
         self.has_moved = False
 
-    def is_valid_movement(self, x2, y2, brett):
+    def is_valid_movement(self, x2, y2, brett, history):
 
         # not outside board
-        if not super(Rook, self).is_valid_movement(x2, y2, brett):
+        if not super(Rook, self).is_valid_movement(x2, y2, brett, history):
             return False
 
         # if straight moving, x or y stays put, the other moves
@@ -199,10 +204,10 @@ class Bishop(Game_Piece):
         super(Bishop, self).__init__(col, x, y)
         self.letter = 'B'
 
-    def is_valid_movement(self, x2, y2, brett):
+    def is_valid_movement(self, x2, y2, brett, history):
 
         # not outside board
-        if not super(Bishop, self).is_valid_movement(x2, y2, brett):
+        if not super(Bishop, self).is_valid_movement(x2, y2, brett, history):
             return False
 
         if abs(x2 - self.x) == abs(y2 - self.y):
@@ -240,10 +245,10 @@ class King(Game_Piece):
         self.letter = 'K'
         self.has_moved = False
 
-    def is_valid_movement(self, x2, y2, brett):
+    def is_valid_movement(self, x2, y2, brett, history):
 
         # not outside board
-        if not super(King, self).is_valid_movement(x2, y2, brett):
+        if not super(King, self).is_valid_movement(x2, y2, brett, history):
             return False
 
         # Diagonal movement for the king

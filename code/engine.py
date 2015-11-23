@@ -6,7 +6,7 @@ from user import *
 
 # - Must also check for check or checkmate (again,
 #   not in this class)
-# - En pasant
+# - Bonde kan angripe med vanlig trekk
 
 class Engine(object):
     def __init__(self):
@@ -19,7 +19,7 @@ class Engine(object):
 
         while True:
             print(self.board.console_board())  # Visualiserer brettet i konsollen
-            if self.update() == 'surrender':  # Spillet slutter hvis en av spillerene skriver 'surrender'
+            if self.update() == 'GG':  # Spillet slutter hvis en av spillerene skriver 'GG'
                 break
         print(self.history)  # Printer ut alle trekkene som har blitt gjort
 
@@ -42,7 +42,7 @@ class Engine(object):
                 except ValueError:
                     print('Skriv noge så gir meining!')
                     continue
-                if white_choice == 'surrender':  # Hvis hvit spiller skriver 'surrender'
+                if white_choice == 'GG':  # Hvis hvit spiller skriver 'GG'
                     print('Black wins!')
                     return white_choice
                 fromX = int(white_choice[0])
@@ -57,9 +57,9 @@ class Engine(object):
                 except ValueError:
                     print('Skriv noge så gir meining!')
                     continue
-                if black_choice == 'surrender':  # Hvis svart spiller skriver 'surrender'
+                if black_choice == 'GG':  # Hvis svart spiller skriver 'GG'
                     print('White wins!')
-                    return white_choice
+                    return black_choice
                 fromX = int(black_choice[0])
                 fromY = int(black_choice[1])
                 toX = int(black_choice[2])
@@ -86,7 +86,7 @@ class Engine(object):
             except AttributeError:
                 pass
 
-            if brikke_flyttes.is_valid_movement(toX, toY, self.sjakkbrett):  # Hvis valid movement
+            if brikke_flyttes.is_valid_movement(toX, toY, self.sjakkbrett, self.history):  # Hvis valid movement
                 print(
                     'Moving %s from (%i,%i) to (%i,%i)!' % (brikke_flyttes.letter, fromX, fromY, toX, toY))
                 self.sjakkbrett[fromX][fromY] = None
@@ -94,7 +94,7 @@ class Engine(object):
                 brikke_flyttes.y = toY  # y-verdien til objektet oppdateres...
                 # her må det til validering da, at vi ikke tar vår egen brikker m.m.
                 self.sjakkbrett[toX][toY] = brikke_flyttes
-                self.history.append(history)  # Trekket som ble gjort lagres i history-listen
+                self.history.append(str(self.turn) + ': ' + history)  # Trekket som ble gjort lagres i history-listen
                 input_ikke_valid = False
 
             else:
@@ -102,5 +102,6 @@ class Engine(object):
                 # input_ikke_valid er fremdeles True, så loopen kjøres igjen
 
                 # ===============================================================================================
+
 
 Engine()
