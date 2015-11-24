@@ -14,8 +14,6 @@ Sjakk som kan spilles i konsollen ved hjelp av python
 
 ## Notes
 
-- Svakheter med En pasant
-    - Kan være en annen brikke enn bonde som beveger seg to steg og har samme x-verdi som den angripende bonden 
 
 ## Contributors
 
