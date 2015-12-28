@@ -48,10 +48,8 @@ class GameBoard(object):
                 # hvis det IKKE er None i ruten, dvs hvis det er Game_Piece der
                 if rute:
                     # Game_Piece har en egen attribute .letter
-                    if rute.color == 'B':
-                        rad_string += rute.letter.lower()
-                    else:
-                        rad_string += rute.letter
+
+                    rad_string += rute.letter
                 # ellers, hvis det er None i ruten (den er tom)
                 else:
                     rad_string += '.'

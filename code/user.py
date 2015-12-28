@@ -15,9 +15,9 @@
                     return fra  # Returnerer bare 'GG' fra spiller
                 til = input('Select where you want to move(x2y2): ')
 
-                x = bokstav_tall[fra[0]]
+                x = bokstav_tall[fra[0].upper()]
                 y = int(fra[1]) - 1
-                x2 = bokstav_tall[til[0]]
+                x2 = bokstav_tall[til[0].upper()]
                 y2 = int(til[1]) - 1
 
                 a_ok = True

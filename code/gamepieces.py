@@ -11,7 +11,7 @@ class Game_Piece(object):
         self.x = x
         self.y = y
 
-    def is_valid_movement(self, x2, y2, brett, history):
+    def is_valid_movement(self, x2, y2, brett, history, trussel_før):
         # if not moving at all
         if self.x == x2 and self.y == y2:
             return False
@@ -25,12 +25,15 @@ class Game_Piece(object):
 class Knight(Game_Piece):
     def __init__(self, col, x, y):
         super(Knight, self).__init__(col, x, y)
-        self.letter = 'N'
+        if self.color == 'W':
+            self.letter = 'N'
+        else:
+            self.letter = 'n'
 
-    def is_valid_movement(self, x2, y2, brett, history):
+    def is_valid_movement(self, x2, y2, brett, history, trussel_før):
 
         # if the movement-generalistics (e det et ord?) are ok
-        if not super(Knight, self).is_valid_movement(x2, y2, brett, history):
+        if not super(Knight, self).is_valid_movement(x2, y2, brett, history, trussel_før):
             return False
 
         # the four moves to the "sides"
@@ -50,12 +53,15 @@ class Queen(Game_Piece):
 
         # the parent class, Game_Piece, assigns color, x and y
         super(Queen, self).__init__(col, x, y)
-        self.letter = 'Q'
+        if self.color == 'W':
+            self.letter = 'Q'
+        else:
+            self.letter = 'q'
 
-    def is_valid_movement(self, x2, y2, brett, history):
+    def is_valid_movement(self, x2, y2, brett, history, trussel_før):
 
         # not outside board
-        if not super(Queen, self).is_valid_movement(x2, y2, brett, history):
+        if not super(Queen, self).is_valid_movement(x2, y2, brett, history, trussel_før):
             return False
 
         # if diagonal moving, x and y change by +- the same amount
@@ -114,12 +120,15 @@ class Pawn(Game_Piece):
 
         # the parent class, Game_Piece, assigns color, x and y
         super(Pawn, self).__init__(col, x, y)
-        self.letter = 'P'
+        if self.color == 'W':
+            self.letter = 'P'
+        else:
+            self.letter = 'p'
 
-    def is_valid_movement(self, x2, y2, brett, history):
+    def is_valid_movement(self, x2, y2, brett, history, trussel_før):
 
         # not outside board
-        if not super(Pawn, self).is_valid_movement(x2, y2, brett, history):
+        if not super(Pawn, self).is_valid_movement(x2, y2, brett, history, trussel_før):
             return False
 
         # using 'thing' to avoid processing each color on its own, which
@@ -160,13 +169,16 @@ class Rook(Game_Piece):
 
         # the parent class, Game_Piece, assigns color, x and y
         super(Rook, self).__init__(col, x, y)
-        self.letter = 'R'
+        if self.color == 'W':
+            self.letter = 'R'
+        else:
+            self.letter = 'r'
         self.has_moved = False
 
-    def is_valid_movement(self, x2, y2, brett, history):
+    def is_valid_movement(self, x2, y2, brett, history, trussel_før):
 
         # not outside board
-        if not super(Rook, self).is_valid_movement(x2, y2, brett, history):
+        if not super(Rook, self).is_valid_movement(x2, y2, brett, history, trussel_før):
             return False
 
         # if straight moving, x or y stays put, the other moves
@@ -202,12 +214,15 @@ class Bishop(Game_Piece):
 
         # the parent class, Game_Piece, assigns color, x and y
         super(Bishop, self).__init__(col, x, y)
-        self.letter = 'B'
+        if self.color == 'W':
+            self.letter = 'B'
+        else:
+            self.letter = 'b'
 
-    def is_valid_movement(self, x2, y2, brett, history):
+    def is_valid_movement(self, x2, y2, brett, history, trussel_før):
 
         # not outside board
-        if not super(Bishop, self).is_valid_movement(x2, y2, brett, history):
+        if not super(Bishop, self).is_valid_movement(x2, y2, brett, history, trussel_før):
             return False
 
         if abs(x2 - self.x) == abs(y2 - self.y):
@@ -242,13 +257,26 @@ class King(Game_Piece):
     def __init__(self, col, x, y):
         # the parent class, Game_Piece, assigns color, x and y
         super(King, self).__init__(col, x, y)
-        self.letter = 'K'
+        if self.color == 'W':
+            self.letter = 'K'
+        else:
+            self.letter = 'k'
         self.has_moved = False
 
-    def is_valid_movement(self, x2, y2, brett, history):
+    def is_valid_movement(self, x2, y2, brett, history, trussel_før):
+        if self.color == 'W':
+            trussel_brikker = trussel_før[1]
+            konge_trussel = trussel_før[0]
+        else:
+            trussel_brikker = trussel_før[3]
+            konge_trussel = trussel_før[2]
 
         # not outside board
-        if not super(King, self).is_valid_movement(x2, y2, brett, history):
+        if not super(King, self).is_valid_movement(x2, y2, brett, history, trussel_før):
+            return False
+
+        if [x2, y2] in trussel_brikker:
+            print('Konge er truet!')
             return False
 
         # Diagonal movement for the king
