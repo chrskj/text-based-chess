@@ -129,75 +129,79 @@ class Engine(object):
     # =============================================================================================================
 
     # Lager liste med trusler for svart og hvit
-    def threat(self):
-        B_piece_threat = []
-        W_piece_threat = []
-        W_king_threat = []
-        B_king_threat = []
-        for x in range(8):
+    def threat(self):  # Funksjonen som lager en liste over trusler
+        B_piece_threat = []  # Listen som skal brukes for å lagre trusselen som de svarte brikkene lager
+        W_piece_threat = []  # Listen som skal brukes for å lagre trusselen som de hvite brikkene lager
+        W_king_threat = []  # Listen som skal brukes for å lagre trusselen som den hvite kongen lager
+        B_king_threat = []  # Listen som skal brukes for å lagre trusselen som den svarte kongen lager
+        for x in range(8):  # Går gjennom alle ruter med koordinater [x,y]
             for y in range(8):
-                this_pos = self.sjakkbrett[x][y]
-                pos = self.sjakkbrett
-                if this_pos == None:
+                this_pos = self.sjakkbrett[x][y]  # Denne refererer til den gjeldende ruten
+                pos = self.sjakkbrett  # Denne refererer til alle ruter
+                if this_pos == None:  # Hvis ruten ikke inneholder noe så hopper vi over den
                     pass
 
-                elif this_pos.letter == 'P' or this_pos.letter == 'p':
-                    if this_pos.letter == 'P':
+                elif this_pos.letter == 'P' or this_pos.letter == 'p':  # Hvis ruten inneholder en bonde
+                    if this_pos.letter == 'P':  # Hvis bonden er hvit
                         tall = 1
-                        save = W_piece_threat
+                        save = W_piece_threat  # Lagrer trusselen til hvit sin liste
                     else:
                         tall = -1
-                        save = B_piece_threat
-                    save.append([this_pos.x + 1, this_pos.y + tall])
-                    save.append([this_pos.x - 1, this_pos.y + tall])
+                        save = B_piece_threat  # Lagrer trusselen til svart sin liste
+                    save.append([this_pos.x + 1, this_pos.y + tall])  # Lagrer det skrå angrepet til bonden
+                    save.append([this_pos.x - 1, this_pos.y + tall])  # Lagrer det andre skrå angrepet til bonden
 
-                elif this_pos.letter == 'r' or this_pos.letter == 'R':
-                    if this_pos.letter == 'r':
-                        save = B_piece_threat
+                elif this_pos.letter == 'r' or this_pos.letter == 'R':  # Hvis ruten inneholder et tårn
+                    if this_pos.letter == 'r':  # Hvis tårnet er svart
+                        save = B_piece_threat  # Lagrer trusselen til svart sin liste
                     else:
-                        save = W_piece_threat
-                    for i in range(-1, 2):
-                        if i == 0:
-                            pass
+                        save = W_piece_threat  # Lagrer trusselen til hvit sin liste
+                    for i in range(-1, 2):  # loop med tallene -1 og 1. 0 ignoreres
+                        if i == 0:  # Ignoreres som sagt
+                            pass  # Yup...
                         else:
                             for p in range(-1, 2):
+                                # Same shit, -1 og 1. Hvis du har MAD skills så ser du at me har
+                                # tallkombinasjonane [-1,-1],[-1,1],[1,-1],[1,1], dette er fordi tårnet kan bevege seg
+                                # i fire retninger
                                 if p == 0:
                                     pass
                                 else:
-                                    teller = 0
+                                    teller = 0  # Må ha en teller siden tårnet bevege seg bortøve uknow.
                                     while True:
-                                        teller += 1
-                                        if p == 1:
-                                            k = this_pos.y + teller * i
-                                            l = this_pos.x
-                                            if (k) > 7 or (k) < 0:
+                                        teller += 1  # Øker teller...
+                                        if p == 1:  # opp/ned
+                                            k = this_pos.y + teller * i  # opp hvis i=1 og ned hvis i=-1
+                                            l = this_pos.x  # Konstant
+                                            if (k) > 7 or (k) < 0:  # ABORT hvis ruten er utenfor brettet
                                                 break
-                                        else:
-                                            k = this_pos.y
-                                            l = this_pos.x + teller * i
-                                            if (l) > 7 or (l) < 0:
+                                        else:  # høyre/venstre
+                                            k = this_pos.y  # Konstant
+                                            l = this_pos.x + teller * i  # høyre hvis i=1 og venstre hvis i=-1
+                                            if (l) > 7 or (l) < 0:  # ABORT hvis ruten er utenfor brettet
                                                 break
-                                        if pos[l][k]:
+                                        if pos[l][k]:  # Hvis ruten har en brikke i seg så lagres den og loopen stoppes
                                             save.append([l, k])
                                             break
                                         else:
                                             save.append([l, k])
 
-                elif this_pos.letter == 'q' or this_pos.letter == 'Q':
-                    if this_pos.letter == 'q':
-                        save = B_piece_threat
+                elif this_pos.letter == 'q' or this_pos.letter == 'Q':  # Hvis ruten inneholder en dronning
+                    # OK, dronning e basically bare tårn og løper i samme if-setning. Se på de for mer info.
+                    if this_pos.letter == 'q':  # Hvis svart dronning
+                        save = B_piece_threat  # Lagrer trusselen til svart sin liste
                     else:
-                        save = W_piece_threat
-                    for i in range(-1, 2):
-                        if i == 0:
+                        save = W_piece_threat  # Lagrer trusselen til hvit sin liste
+                    for i in range(-1, 2):  # Same deal, -1 og 1
+                        if i == 0:  # Ignored
                             pass
                         else:
-                            for p in range(-1, 2):
-                                if p == 0:
+                            for p in range(-1, 2):  # Same deal, -1 og 1
+                                if p == 0:  # Ignored
                                     pass
                                 else:
                                     teller1 = 0
-                                    while True:
+                                    while True:  # løper-delen
                                         teller1 += 1
                                         if p == 1:
                                             k1 = this_pos.y + teller1 * i
@@ -213,7 +217,7 @@ class Engine(object):
                                         else:
                                             save.append([l1, k1])
                                     teller2 = 0
-                                    while True:
+                                    while True:  # tårn-delen
                                         teller2 += 1
                                         if p == 1:
                                             k2 = this_pos.y + teller2 * i
@@ -231,63 +235,63 @@ class Engine(object):
                                         else:
                                             save.append([l2, k2])
 
-                elif this_pos.letter == 'k' or this_pos.letter == 'K':
-                    if this_pos.letter == 'k':
-                        save = B_king_threat
+                elif this_pos.letter == 'k' or this_pos.letter == 'K':  # Hvis ruten inneholder en konge
+                    if this_pos.letter == 'k':  # Hvis svart konge!
+                        save = B_king_threat  # Lagrer trusselen til svart sin konge-liste
                     else:
-                        save = W_king_threat
-                    for i in range(-1, 2):
-                        for p in range(-1, 2):
-                            if i == p and i == 0:
+                        save = W_king_threat  # Lagrer trusselen til hvit sin konge-liste
+                    for i in range(-1, 2):  # Same deal, -1 og 1
+                        for p in range(-1, 2):  # Same deal, -1 og 1
+                            if i == p and i == 0:  # Ignored
                                 pass
                             else:
-                                if 0 <= this_pos.x + i <= 7 and 0 <= this_pos.y + p <= 7:
-                                    save.append([this_pos.x + i, this_pos.y + p])
+                                if 0 <= this_pos.x + i <= 7 and 0 <= this_pos.y + p <= 7:  # Hvis innenfor brettet
+                                    save.append([this_pos.x + i, this_pos.y + p])  # Save that shiet
 
-                elif this_pos.letter == 'b' or this_pos.letter == 'B':
-                    if this_pos.letter == 'b':
+                elif this_pos.letter == 'b' or this_pos.letter == 'B':  # Hvis ruten inneholder en løper
+                    if this_pos.letter == 'b':  # Hvis svart løper!
                         save = B_piece_threat
                     else:
                         save = W_piece_threat
-                    for i in range(-1, 2):
-                        if i == 0:
+                    for i in range(-1, 2):  # Same deal, -1 og 1
+                        if i == 0:  # Ignored
                             pass
                         else:
-                            for p in range(-1, 2):
-                                if p == 0:
+                            for p in range(-1, 2):  # Same deal, -1 og 1
+                                if p == 0:  # Ignored
                                     pass
                                 else:
-                                    teller = 0
+                                    teller = 0  # Teller, fordi løper bevege seg bortøve
                                     while True:
-                                        teller += 1
-                                        if p == 1:
+                                        teller += 1  # Teller økes :O
+                                        if p == 1:  # Opp/høyre (i=1) eller ned/venstre (i=-1)
                                             k = this_pos.y + teller * i
                                             l = this_pos.x + teller * i
-                                        else:
+                                        else:  # Opp/venstre (i=1) eller ned/høyre (i=-1)
                                             k = this_pos.y + teller * i
                                             l = this_pos.x - teller * i
                                         if k > 7 or k < 0 or l > 7 or l < 0:
                                             break
-                                        elif pos[l][k]:
+                                        elif pos[l][k]:  # Hvis ruten inneholder en brikke. Lagres og avslutter
                                             save.append([l, k])
                                             break
-                                        else:
+                                        else:  # Hvis tom lagres denne og loopen fortsetter
                                             save.append([l, k])
 
-                elif this_pos.letter == 'n' or this_pos.letter == 'N':
-                    if this_pos.letter == 'n':
-                        save = B_piece_threat
+                elif this_pos.letter == 'n' or this_pos.letter == 'N':  # Hvis ruten inneholder en hest
+                    if this_pos.letter == 'n':  # Hvis svart hest
+                        save = B_piece_threat  # Lagrer trusselen til svart sin liste
                     else:
-                        save = W_piece_threat
-                    for i in range(-2, 3):
-                        if i == 0:
+                        save = W_piece_threat  # Lagrer trusselen til hvit sin liste
+                    for i in range(-2, 3):  # -2, -1, 1, 2
+                        if i == 0:  # Ignored
                             pass
                         else:
-                            for p in range(-2, 3):
-                                if p == 0 or abs(p) == abs(i):
+                            for p in range(-2, 3):  # -2, -1, 1, 2
+                                if p == 0 or abs(p) == abs(i):  # Hopper over tilfellene n[r i og p er like
                                     pass
-                                else:
-                                    if 0 <= this_pos.x + i <= 7 and 0 <= this_pos.y + p <= 7:
+                                else:  # Nå har me [-2, -1],[-2, 1],[-1, -2],[-1, 2],[1, -2],[1, 2], [2, -1], [2, 1]
+                                    if 0 <= this_pos.x + i <= 7 and 0 <= this_pos.y + p <= 7:  # hvis innenfor brettet
                                         save.append([this_pos.x + i, this_pos.y + p])
 
                 else:
@@ -308,6 +312,7 @@ class Engine(object):
         W_piece_threat = B_new_threat_list
 
         return B_king_threat, B_piece_threat, W_king_threat, W_piece_threat
+        # Returnerer trussellisten til svart konge, svarte brikker, hvit konge og hvite brikker
 
 
 Engine()
