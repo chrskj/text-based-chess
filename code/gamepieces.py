@@ -267,16 +267,24 @@ class King(Game_Piece):
         if self.color == 'W':  # Hvis hvit konge blir variablene trusselen som de svarte brikker påfører
             trussel_brikker = trussel_før[1]
             trussel_konge = trussel_før[0]
+            trussel_Vbrikker = trussel_før[3]
         else:
             trussel_brikker = trussel_før[3]
             trussel_konge = trussel_før[2]
+            trussel_Vbrikker = trussel_før[1]
 
         # not outside board
         if not super(King, self).is_valid_movement(x2, y2, brett, history, trussel_før):
             return False
 
+        # Hvis ruten er truet
         if [x2, y2] in trussel_brikker:
             print('Konge er truet!')
+            return False
+
+        # Hvis ruten er truet av motstanderens konge
+        if [x2, y2] in trussel_konge and [x2, y2] not in trussel_Vbrikker:
+            print('Sorry dude, you have no backup.')
             return False
 
         # Diagonal movement for the king
