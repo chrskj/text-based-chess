@@ -312,7 +312,7 @@ class Engine(object):
         W_piece_threat = B_new_threat_list
 
         return B_king_threat, B_piece_threat, W_king_threat, W_piece_threat
-        # Returnerer trussellisten til svart konge, svarte brikker, hvit konge og hvite brikker
+        # Returnerer trussellisten til svart konge[0], svarte brikker[1], hvit konge[2] og hvite brikker[3]
 
 
 Engine()

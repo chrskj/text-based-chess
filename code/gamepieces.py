@@ -264,12 +264,12 @@ class King(Game_Piece):
         self.has_moved = False
 
     def is_valid_movement(self, x2, y2, brett, history, trussel_før):
-        if self.color == 'W':
+        if self.color == 'W':  # Hvis hvit konge blir variablene trusselen som de svarte brikker påfører
             trussel_brikker = trussel_før[1]
-            konge_trussel = trussel_før[0]
+            trussel_konge = trussel_før[0]
         else:
             trussel_brikker = trussel_før[3]
-            konge_trussel = trussel_før[2]
+            trussel_konge = trussel_før[2]
 
         # not outside board
         if not super(King, self).is_valid_movement(x2, y2, brett, history, trussel_før):
@@ -295,25 +295,26 @@ class King(Game_Piece):
             return True
 
         # If first move
-        if not self.has_moved:
+        if not self.has_moved and [self.x, self.y] not in trussel_brikker:
 
             # Kort rokade!
-            if self.y == y2 and x2 - self.x == 2 and not brett[7][self.y].has_moved and not brett[5][self.y]:
-                self.has_moved = True
-                brett[7][self.y].has_moved = True
-                brett[7][self.y].x = 5
-                brett[5][self.y] = brett[7][self.y]
-                brett[7][self.y] = None
+            if self.y == y2 and x2 - self.x == 2 and not brett[7][self.y].has_moved and not brett[5][self.y] and \
+                    [5, self.y] not in trussel_brikker:
+                self.has_moved = True  # Konge har flyttet seg
+                brett[7][self.y].has_moved = True  # Tårn har flyttet seg
+                brett[7][self.y].x = 5  # Tårn får tilegnet x-verdien 5
+                brett[5][self.y] = brett[7][self.y]  # Tårn flyttes til rute [5,y]
+                brett[7][self.y] = None  # Forrige rute blir tom
                 return True
 
             # Lang rokade!
             if self.y == y2 and self.x - x2 == 3 and not brett[0][self.y].has_moved and not brett[2][self.y] and not \
-                    brett[3][self.y]:
-                self.has_moved = True
-                brett[0][self.y].has_moved = True
-                brett[0][self.y].x = 2
-                brett[2][self.y] = brett[0][self.y]
-                brett[0][self.y] = None
+                    brett[3][self.y] and [2, self.y] not in trussel_brikker and [3, self.y] not in trussel_brikker:
+                self.has_moved = True  # Konge har flyttet seg
+                brett[0][self.y].has_moved = True  # Tårn har flyttet seg
+                brett[0][self.y].x = 2  # Tårn får tilegnet x-verdien 2
+                brett[2][self.y] = brett[0][self.y]  # Tårn flyttes til rute [2,y]
+                brett[0][self.y] = None  # Forrige rute blir tom
                 return True
 
         return False
