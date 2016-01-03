@@ -14,8 +14,6 @@ Sjakk som kan spilles i konsollen ved hjelp av python
 
 ## Bugs
 
-- Hvis input er et tosifret tall blir bare første siffer brukt (eks: 10 -> 1, 20 -> 2). Bør heller gi feilmelding
-
 ## Contributors
 
 Malann
