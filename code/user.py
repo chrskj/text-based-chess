@@ -14,6 +14,9 @@
                 if fra == 'GG':
                     return fra  # Returnerer bare 'GG' fra spiller
                 til = input('Select where you want to move(x2y2): ')
+                if len(fra) > 2 or len(til) > 2:
+                    print('Skriv noe som gir mening')
+                    continue
 
                 x = bokstav_tall[fra[0].upper()]
                 y = int(fra[1]) - 1
