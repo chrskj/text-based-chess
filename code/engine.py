@@ -33,20 +33,20 @@ class Engine(object):
         input_ikke_valid = True
 
         while input_ikke_valid:
-            print('TURN NUMMER ', self.turn)
+            print('TREKK NUMMER ', self.turn)
 
             # ===============================================================================================
 
             # Hvit sin tur på oddetallsrunder, og motsatt for svart
             if self.turn % 2:
-                print('White\'s turn!')
+                print('Hvit sin tur!')
                 try:
                     white_choice = self.player_white.movement_input()
                 except ValueError:
-                    print('Skriv noge så gir meining!')
+                    print('Skriv noe som gir mening!')
                     continue
                 if white_choice == 'GG':  # Hvis hvit spiller skriver 'GG'
-                    print('Black wins!')
+                    print('Svart vinner!')
                     return white_choice
                 fromX = int(white_choice[0])
                 fromY = int(white_choice[1])
@@ -54,14 +54,14 @@ class Engine(object):
                 toY = int(white_choice[3])
                 history = white_choice[4]
             else:
-                print('Black\'s turn!')
+                print('Svart sin tur!')
                 try:
                     black_choice = self.player_black.movement_input()
                 except ValueError:
-                    print('Skriv noge så gir meining!')
+                    print('Skriv noe som gir mening!')
                     continue
                 if black_choice == 'GG':  # Hvis svart spiller skriver 'GG'
-                    print('White wins!')
+                    print('Hvit vinner!')
                     return black_choice
                 fromX = int(black_choice[0])
                 fromY = int(black_choice[1])
@@ -74,17 +74,17 @@ class Engine(object):
             brikke_flyttes = self.sjakkbrett[fromX][fromY]
 
             if not brikke_flyttes:  # hvis du valgte tom rute
-                print('Deeeet var en tom rute.')
+                print('Tom rute')
                 continue
             if self.turn % 2 and brikke_flyttes.color == "B":  # Hvis hvit prøver å styre svarte brikker
-                print('Styr dine egne brikker du...')
+                print('Kan bare styre dine egne brikker')
                 continue
             if not self.turn % 2 and brikke_flyttes.color == "W":  # Hvis svart prøver å styre hvite brikker
-                print('Styr dine egne brikker du...')
+                print('Kan bare styre dine egne brikker')
                 continue
             try:  # Hvis valgt destinasjon inneholder friendly piece
                 if brikke_flyttes.color == self.sjakkbrett[toX][toY].color:
-                    print('Hey, det e fienden du sga dreba!')
+                    print('Kan ikke angripe egne brikker!')
                     continue
             except AttributeError:
                 pass
@@ -104,13 +104,18 @@ class Engine(object):
             brikke_flyttes.y = fromY
             #########################################################################
 
-            if self.W_king_pos in trussel_etter[1] or self.B_king_pos in trussel_etter[3]:
-                print('Kongen vil bli truet av dette trekket!')
-                continue
+            if self.turn % 2:  # Hvis hvit sin tur
+                if self.W_king_pos in trussel_etter[1]:  # Hvis hvit konge er truet etter hvit sitt trekk
+                    print('Kongen vil bli truet av dette trekket!')
+                    continue
+            else:
+                if self.B_king_pos in trussel_etter[3]:  # Hvis svart konge er truet etter svart sitt trekk
+                    print('Kongen vil bli truet av dette trekket!')
+                    continue
 
             if brikke_flyttes.is_valid_movement(toX, toY, self.sjakkbrett, self.history,
                                                 trussel_før):  # Hvis valid movement
-                print('Moving %s from (%i,%i) to (%i,%i)!' % (brikke_flyttes.letter, fromX, fromY, toX, toY))
+                print('Flytter %s fra (%i,%i) til (%i,%i)!' % (brikke_flyttes.letter, fromX, fromY, toX, toY))
                 self.sjakkbrett[fromX][fromY] = None  # Valgt rute blir tom
                 brikke_flyttes.x = toX  # x-verdien til objektet oppdateres...
                 brikke_flyttes.y = toY  # y-verdien til objektet oppdateres...
@@ -123,7 +128,7 @@ class Engine(object):
                     self.B_king_pos = [toX, toY]
 
             else:
-                print('Invalid move. Try again nigga!')
+                print('Ulovlig trekk!')
                 # input_ikke_valid er fremdeles True, så loopen kjøres igjen
 
     # =============================================================================================================
