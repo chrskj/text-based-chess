@@ -113,8 +113,7 @@ class Engine(object):
                     print('Kongen vil bli truet av dette trekket!')
                     continue
 
-            if brikke_flyttes.is_valid_movement(toX, toY, self.sjakkbrett, self.history,
-                                                trussel_før):  # Hvis valid movement
+            if brikke_flyttes.is_valid_movement(toX, toY, self.sjakkbrett, self.history, trussel_før):  # Valid movement
                 print('Flytter %s fra (%i,%i) til (%i,%i)!' % (brikke_flyttes.letter, fromX, fromY, toX, toY))
                 self.sjakkbrett[fromX][fromY] = None  # Valgt rute blir tom
                 brikke_flyttes.x = toX  # x-verdien til objektet oppdateres...
@@ -126,6 +125,12 @@ class Engine(object):
                     self.W_king_pos = [toX, toY]
                 elif brikke_flyttes.letter == 'k':
                     self.B_king_pos = [toX, toY]
+                if self.turn % 2:  # Hvis hvit sin tur
+                    if self.B_king_pos in trussel_etter[3]:  # Hvis svart konge er truet etter hvit sitt trekk
+                        print('SJAKK')
+                else:
+                    if self.W_king_pos in trussel_etter[1]:  # Hvis hvit konge er truet etter svart sitt trekk
+                        print('SJAKK')
 
             else:
                 print('Ulovlig trekk!')
