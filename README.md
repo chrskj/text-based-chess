@@ -6,9 +6,8 @@ Sjakk som kan spilles i konsollen ved hjelp av python
 
 ## To-do
 
-1. Bønder blir andre brikker når de beveger seg til enden.
-2. Programmere sjekk av sjakk matt
-3. Visualisere brettet med tkinter
+1. Programmere sjekk av sjakk matt
+2. Visualisere brettet med tkinter
 
 ## Notes
 
