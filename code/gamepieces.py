@@ -142,7 +142,11 @@ class Pawn(Game_Piece):
         if self.x == x2:
             # if normal move
             if y2 - self.y == 1 * thing:
-                return True
+                if brett[self.x][y2]:
+                    print('Kan ikke angripe fremover!')
+                    return False
+                else:
+                    return True
             # if first move
             if y2 - self.y == 2 * thing and (self.y == 1 or self.y == 6):
                 return True

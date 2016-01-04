@@ -89,7 +89,7 @@ class Engine(object):
             except AttributeError:
                 pass
 
-            #########################################################################
+            ############################################################################################################
             # Dette pisset e et resultat av å få trussel både før og etter trekket
             trussel_før = self.threat()  # Trusselbildet før trekket utføres
             brikke_flyttes.x = toX
@@ -102,7 +102,7 @@ class Engine(object):
             self.sjakkbrett[toX][toY] = til_rute
             brikke_flyttes.x = fromX
             brikke_flyttes.y = fromY
-            #########################################################################
+            ############################################################################################################
 
             if self.turn % 2:  # Hvis hvit sin tur
                 if self.W_king_pos in trussel_etter[1]:  # Hvis hvit konge er truet etter hvit sitt trekk
@@ -121,22 +121,41 @@ class Engine(object):
                 self.sjakkbrett[toX][toY] = brikke_flyttes  # Destinasjonsruten får brikken
                 self.history.append(str(self.turn) + ': ' + history)  # Trekket som ble gjort lagres i history-listen
                 input_ikke_valid = False
+                ########################################################################################################
                 if brikke_flyttes.letter == 'K':
-                    self.W_king_pos = [toX, toY]
+                    self.W_king_pos = [toX, toY]  # Lagrer posisjonen til hvit konge
                 elif brikke_flyttes.letter == 'k':
-                    self.B_king_pos = [toX, toY]
+                    self.B_king_pos = [toX, toY]  # Lagrer posisjonen til svart konge
+                ########################################################################################################
                 if self.turn % 2:  # Hvis hvit sin tur
                     if self.B_king_pos in trussel_etter[3]:  # Hvis svart konge er truet etter hvit sitt trekk
                         print('SJAKK')
                 else:
                     if self.W_king_pos in trussel_etter[1]:  # Hvis hvit konge er truet etter svart sitt trekk
                         print('SJAKK')
-
+                ########################################################################################################
+                if (brikke_flyttes.letter == 'P' or brikke_flyttes.letter == 'p') and (brikke_flyttes.y == 7 or brikke_flyttes.y == 0):
+                    if self.turn % 2:
+                        farge = 'W'
+                        x = 7
+                    else:
+                        farge = 'B'
+                        x = 0
+                    ny_brikke = input('Gratulerer, velg en brikke du ønsker').lower()
+                    if ny_brikke == 'r':
+                        self.sjakkbrett[toX][toY] = Rook(farge, x, toY)
+                    elif ny_brikke == 'n':
+                        self.sjakkbrett[toX][toY] = Knight(farge, x, toY)
+                    elif ny_brikke == 'b':
+                        self.sjakkbrett[toX][toY] = Bishop(farge, x, toY)
+                    elif ny_brikke == 'q':
+                        self.sjakkbrett[toX][toY] = Queen(farge, x, toY)
+                ########################################################################################################
             else:
                 print('Ulovlig trekk!')
                 # input_ikke_valid er fremdeles True, så loopen kjøres igjen
 
-    # =============================================================================================================
+    # ==================================================================================================================
 
     # Lager liste med trusler for svart og hvit
     def threat(self):  # Funksjonen som lager en liste over trusler
