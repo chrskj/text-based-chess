@@ -130,9 +130,19 @@ class Engine(object):
                 if self.turn % 2:  # Hvis hvit sin tur
                     if self.B_king_pos in trussel_etter[3]:  # Hvis svart konge er truet etter hvit sitt trekk
                         print('SJAKK')
+                        for x in trussel_etter[0]:
+                            if not self.sjakkbrett[x[0]][x[1]] and x not in trussel_etter[3]:  # Trekk som ikke er truet
+                                print('Det er visst en vei ut')
+                            else:  # Hvis konge er innestengt
+                                pass  # Mer kommer+++
                 else:
                     if self.W_king_pos in trussel_etter[1]:  # Hvis hvit konge er truet etter svart sitt trekk
                         print('SJAKK')
+                        for x in trussel_etter[2]:  # For mulige trekk til hvit konge
+                            if not self.sjakkbrett[x[0]][x[1]] and x not in trussel_etter[1]:  # Trekk som ikke er truet
+                                print('Det er visst en vei ut')
+                            else:  # Hvis konge er innestengt
+                                pass  # Mer kommer+++
                 ########################################################################################################
                 if (brikke_flyttes.letter == 'P' or brikke_flyttes.letter == 'p') and (brikke_flyttes.y == 7 or brikke_flyttes.y == 0):
                     if self.turn % 2:
