@@ -109,13 +109,13 @@ class Engine(object):
                     continue
             except AttributeError:
                 pass
-            if self.turn % 2:
-                if self.W_king_pos in trussel_etter[1]:  # Hvis hvit konge er truet etter hvit sitt trekk
-                    print('Kongen vil bli truet av dette trekket!')
+            if brikke_flyttes.letter == 'K':
+                if [toX, toY] in trussel_etter[1]:  # Hvis hvit konge er truet etter hvit sitt trekk
+                    print('hvit konge vil bli truet av dette trekket!')
                     continue
-            else:
-                if self.B_king_pos in trussel_etter[3]:  # Hvis svart konge er truet etter svart sitt trekk
-                    print('Kongen vil bli truet av dette trekket!')
+            elif brikke_flyttes.letter == 'k':
+                if [toX, toY] in trussel_etter[3]:  # Hvis svart konge er truet etter svart sitt trekk
+                    print('svart konge vil bli truet av dette trekket!')
                     continue
 
             # ==========================================================================================================
@@ -152,6 +152,13 @@ class Engine(object):
                     else:
                         print('Svart vinner!')
                         return 'GG'
+
+                # ------------------------------------------------------------------------------------------------------
+                # Kjører sjakkmatt-funksjonen for å se om noen har vunnet
+
+                if self.remi(trussel_før, trussel_etter):
+                    print('Remi!')
+                    return 'GG'
 
                 # ------------------------------------------------------------------------------------------------------
                 # Hvis en bonde har nådd enden og har mulighet til å forvandle seg
@@ -391,9 +398,18 @@ class Engine(object):
 
             # Sjekker om kongen har en vei ut
             for x in trussel_etter[tall2]:  # For mulige trekk til konge
-                if not self.sjakkbrett[x[0]][x[1]] and x not in trussel_etter[tall1]:  # Trekk som ikke er truet
-                    # print('Det er visst en vei ut')
-                    return False
+                if x not in trussel_etter[tall1]:  # Trekk som ikke er truet
+                    if not self.sjakkbrett[x[0]][x[1]]:  # Hvis tom brikke
+                        # print('Det er visst en vei ut')
+                        return False
+                    elif self.sjakkbrett[x[0]][x[1]].color == farge1:  # Hvis fiendtlig brikke
+                        print(x)
+                        print(kongepos)
+                        if self.sjakkbrett[kongepos[0]][kongepos[1]].is_valid_movement(x[0], x[1], self.sjakkbrett, self.history, trussel_etter):
+                            print('Ingen beskyttelse haha!')
+                            return False
+
+
 
             # Sjekker hvilke brikker som truer kongen
             for kolonne in self.sjakkbrett:
@@ -454,4 +470,62 @@ class Engine(object):
 
     ####################################################################################################################
 
+    def remi(self, trussel_før, trussel_etter):
+        if self.turn % 2:
+            tall1 = 1
+            tall2 = 2
+            motstander = 'W'
+            meg = 'B'
+        else:
+            tall1 = 3
+            tall2 = 0
+            motstander = 'B'
+            meg = 'W'
+
+        brikkerleft = []
+        minebrikker = []
+
+        for kolonne in self.sjakkbrett:
+            for brikke in kolonne:
+                if brikke:
+                    brikkerleft.append(brikke)
+
+        if len(brikkerleft) == 2:
+            return True  # k vs k
+        elif len(brikkerleft) == 3:
+            for brikke in brikkerleft:
+                if brikke.letter == 'B' or brikke.letter == 'b' or brikke.letter == 'N' or brikke.letter == 'n':
+                    return True  # k, b vs k eller k, n vs k
+        elif len(brikkerleft) == 4:
+            hvit_bishop = False
+            svart_bishop = False
+            for brikke in brikkerleft:
+                if brikke.letter == 'B':
+                    hvit_bishop = brikke.x % 2 + brikke.y % 2
+                if brikke.letter == 'b':
+                    svart_bishop = brikke.x % 2 + brikke.y % 2
+            if hvit_bishop and svart_bishop:
+                if svart_bishop % 2 == hvit_bishop % 2:
+                    return True  # k, b vs k, b hvor b og b står på samme fargerute
+
+        gyldige_trekk = []
+        for rute in trussel_etter[tall1]:
+            if not self.sjakkbrett[rute[0]][rute[1]] or self.sjakkbrett[rute[0]][rute[1]].color == motstander:
+                gyldige_trekk.append(rute)
+        # print('Gyldige trekk:', gyldige_trekk)
+
+        # Sjekker om kongen har en vei ut
+        for kolonne in self.sjakkbrett:
+            for brikke in kolonne:
+                if brikke:
+                    if brikke.color == meg:
+                        minebrikker.append(brikke)
+
+        for brikke in minebrikker:
+            for x in range(8):
+                for y in range(8):
+                    if brikke.is_valid_movement(x, y, self.sjakkbrett, self.history, trussel_etter):
+                        print('Det finnes en vei ut!')
+                        return False
+        return True
 Engine()
