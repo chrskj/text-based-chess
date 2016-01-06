@@ -69,22 +69,22 @@ class Queen(Game_Piece):
             if x2 - self.x > 0 and y2 - self.y > 0:
                 for i in range(1, x2 - self.x):
                     if brett[self.x + i][self.y + i]:
-                        print('Det var visst noe imellom her.')
+                        # print('Det var visst noe imellom her.')
                         return False
             if x2 - self.x < 0 and y2 - self.y > 0:
                 for i in range(1, self.x - x2):
                     if brett[self.x - i][self.y + i]:
-                        print('Det var visst noe imellom her.')
+                        # print('Det var visst noe imellom her.')
                         return False
             if x2 - self.x > 0 and y2 - self.y < 0:
                 for i in range(1, x2 - self.x):
                     if brett[self.x + i][self.y - i]:
-                        print('Det var visst noe imellom her.')
+                        # print('Det var visst noe imellom her.')
                         return False
             if x2 - self.x < 0 and y2 - self.y < 0:
                 for i in range(1, self.x - x2):
                     if brett[self.x - i][self.y - i]:
-                        print('Det var visst noe imellom her.')
+                        # print('Det var visst noe imellom her.')
                         return False
             return True
 
@@ -93,22 +93,22 @@ class Queen(Game_Piece):
             if x2 - self.x > 0:  # End more to the right than start
                 for i in range(1, x2 - self.x):
                     if brett[x2 - i][self.y]:
-                        print('Det var visst noe imellom her.')
+                        # print('Det var visst noe imellom her.')
                         return False
             if self.x - x2 > 0:  # Start more to the right than end
                 for i in range(1, self.x - x2):
                     if brett[self.x - i][self.y]:
-                        print('Det var visst noe imellom her.')
+                        # print('Det var visst noe imellom her.')
                         return False
             if y2 - self.y > 0:  # End higher up than start
                 for i in range(1, y2 - self.y):
                     if brett[self.x][y2 - i]:
-                        print('Det var visst noe imellom her.')
+                        # print('Det var visst noe imellom her.')
                         return False
             if self.y - y2 > 0:  # Start higher up than end
                 for i in range(1, self.y - y2):
                     if brett[self.x][self.y - i]:
-                        print('Det var visst noe imellom her.')
+                        # print('Det var visst noe imellom her.')
                         return False
             return True
 
@@ -143,14 +143,14 @@ class Pawn(Game_Piece):
             # if normal move
             if y2 - self.y == 1 * thing:
                 if brett[self.x][y2]:
-                    print('Kan ikke angripe fremover!')
+                    # print('Kan ikke angripe fremover!')
                     return False
                 else:
                     return True
             # if first move
             if y2 - self.y == 2 * thing and (self.y == 1 or self.y == 6):
                 if brett[self.x][y2]:
-                    print('Kan ikke angripe fremover!')
+                    # print('Kan ikke angripe fremover!')
                     return False
                 else:
                     return True
@@ -165,7 +165,7 @@ class Pawn(Game_Piece):
                 if (y2 == 2 or y2 == 5) and int(history[-1][10]) - int(history[-1][4]) == 2 * -thing and ord(history[-1][9]) - 65 == x2:
                     brett[x2][y2 - thing] = None
                     return True
-                print('Ingenting å angripe...')
+                # print('Ingenting å angripe...')
                 return False
             return True
 
@@ -194,22 +194,22 @@ class Rook(Game_Piece):
             if x2 - self.x > 0:  # End more to the right than start
                 for i in range(1, x2 - self.x):
                     if brett[x2 - i][self.y]:
-                        print('Det var visst noe imellom her.')
+                        # print('Det var visst noe imellom her.')
                         return False
             if self.x - x2 > 0:  # Start more to the right than end
                 for i in range(1, self.x - x2):
                     if brett[self.x - i][self.y]:
-                        print('Det var visst noe imellom her.')
+                        # print('Det var visst noe imellom her.')
                         return False
             if y2 - self.y > 0:  # End higher up than start
                 for i in range(1, y2 - self.y):
                     if brett[self.x][y2 - i]:
-                        print('Det var visst noe imellom her.')
+                        # print('Det var visst noe imellom her.')
                         return False
             if self.y - y2 > 0:  # Start higher up than end
                 for i in range(1, self.y - y2):
                     if brett[self.x][self.y - i]:
-                        print('Det var visst noe imellom her.')
+                        # print('Det var visst noe imellom her.')
                         return False
             self.has_moved = True
             return True
@@ -237,22 +237,22 @@ class Bishop(Game_Piece):
             if x2 - self.x > 0 and y2 - self.y > 0:
                 for i in range(1, x2 - self.x):
                     if brett[self.x + i][self.y + i]:
-                        print('Det var visst noe imellom her.')
+                        # print('Det var visst noe imellom her.')
                         return False
             if x2 - self.x < 0 and y2 - self.y > 0:
                 for i in range(1, self.x - x2):
                     if brett[self.x - i][self.y + i]:
-                        print('Det var visst noe imellom her.')
+                        # print('Det var visst noe imellom her.')
                         return False
             if x2 - self.x > 0 and y2 - self.y < 0:
                 for i in range(1, x2 - self.x):
                     if brett[self.x + i][self.y - i]:
-                        print('Det var visst noe imellom her.')
+                        # print('Det var visst noe imellom her.')
                         return False
             if x2 - self.x < 0 and y2 - self.y < 0:
                 for i in range(1, self.x - x2):
                     if brett[self.x - i][self.y - i]:
-                        print('Det var visst noe imellom her.')
+                        # print('Det var visst noe imellom her.')
                         return False
             return True
 
@@ -287,12 +287,12 @@ class King(Game_Piece):
 
         # Hvis ruten er truet
         if [x2, y2] in trussel_brikker:
-            print('Konge er truet!')
+            # print('Konge er truet!')
             return False
 
         # Hvis ruten er truet av motstanderens konge
         if [x2, y2] in trussel_konge and [x2, y2] not in trussel_Vbrikker:
-            print('Beklager, du har ingen støtte!')
+            # print('Beklager, du har ingen støtte!')
             return False
 
         # Diagonal movement for the king

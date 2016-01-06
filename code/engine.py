@@ -9,6 +9,9 @@ from user import *
 # - Bonde kan angripe med vanlig trekk
 
 class Engine(object):
+
+    ####################################################################################################################
+
     def __init__(self):
         self.W_king_pos = [4, 0]
         self.B_king_pos = [4, 7]
@@ -23,8 +26,11 @@ class Engine(object):
             print(self.board.console_board())  # Visualiserer brettet i konsollen
             game = self.update()
             if game == 'GG':  # Spillet slutter hvis en av spillerene skriver 'GG'
+                print(self.board.console_board())
                 break
         print(self.history)  # Printer ut alle trekkene som har blitt gjort
+
+    ####################################################################################################################
 
     def update(self):
         """Spør bruker om flytting av brikker og oppdaterer brettet."""
@@ -35,9 +41,9 @@ class Engine(object):
         while input_ikke_valid:
             print('TREKK NUMMER ', self.turn)
 
-            # ===============================================================================================
-
+            # ==========================================================================================================
             # Hvit sin tur på oddetallsrunder, og motsatt for svart
+
             if self.turn % 2:
                 print('Hvit sin tur!')
                 try:
@@ -69,11 +75,26 @@ class Engine(object):
                 toY = int(black_choice[3])
                 history = black_choice[4]
 
-            # ===============================================================================================
+            # ==========================================================================================================
+            # Dette pisset e et resultat av å få trussel både før og etter trekket
 
             brikke_flyttes = self.sjakkbrett[fromX][fromY]
+            trussel_før = self.threat()  # Trusselbildet før trekket utføres
+            brikke_flyttes.x = toX
+            brikke_flyttes.y = toY
+            self.sjakkbrett[fromX][fromY] = None
+            til_rute = self.sjakkbrett[toX][toY]
+            self.sjakkbrett[toX][toY] = brikke_flyttes
+            trussel_etter = self.threat()  # Trusselbildet etter trekket utføres
+            self.sjakkbrett[fromX][fromY] = brikke_flyttes
+            self.sjakkbrett[toX][toY] = til_rute
+            brikke_flyttes.x = fromX
+            brikke_flyttes.y = fromY
 
-            if not brikke_flyttes:  # hvis du valgte tom rute
+            # ==========================================================================================================
+            # Ulike sjekker for å se om trekket er gyldig
+
+            if not brikke_flyttes:  # hvis du valgte en tom rute
                 print('Tom rute')
                 continue
             if self.turn % 2 and brikke_flyttes.color == "B":  # Hvis hvit prøver å styre svarte brikker
@@ -88,23 +109,7 @@ class Engine(object):
                     continue
             except AttributeError:
                 pass
-
-            ############################################################################################################
-            # Dette pisset e et resultat av å få trussel både før og etter trekket
-            trussel_før = self.threat()  # Trusselbildet før trekket utføres
-            brikke_flyttes.x = toX
-            brikke_flyttes.y = toY
-            self.sjakkbrett[fromX][fromY] = None
-            til_rute = self.sjakkbrett[toX][toY]
-            self.sjakkbrett[toX][toY] = brikke_flyttes
-            trussel_etter = self.threat()  # Trusselbildet etter trekket utføres
-            self.sjakkbrett[fromX][fromY] = brikke_flyttes
-            self.sjakkbrett[toX][toY] = til_rute
-            brikke_flyttes.x = fromX
-            brikke_flyttes.y = fromY
-            ############################################################################################################
-
-            if self.turn % 2:  # Hvis hvit sin tur
+            if self.turn % 2:
                 if self.W_king_pos in trussel_etter[1]:  # Hvis hvit konge er truet etter hvit sitt trekk
                     print('Kongen vil bli truet av dette trekket!')
                     continue
@@ -113,7 +118,14 @@ class Engine(object):
                     print('Kongen vil bli truet av dette trekket!')
                     continue
 
+            # ==========================================================================================================
+            # Sjekker om trekket er gyldig i henhold til brikken som flyttes
+
             if brikke_flyttes.is_valid_movement(toX, toY, self.sjakkbrett, self.history, trussel_før):  # Valid movement
+
+                # ------------------------------------------------------------------------------------------------------
+                # Ting som utføres hvert trekk for å flytte brikker & stuff
+
                 print('Flytter %s fra (%i,%i) til (%i,%i)!' % (brikke_flyttes.letter, fromX, fromY, toX, toY))
                 self.sjakkbrett[fromX][fromY] = None  # Valgt rute blir tom
                 brikke_flyttes.x = toX  # x-verdien til objektet oppdateres...
@@ -121,163 +133,29 @@ class Engine(object):
                 self.sjakkbrett[toX][toY] = brikke_flyttes  # Destinasjonsruten får brikken
                 self.history.append(str(self.turn) + ': ' + history)  # Trekket som ble gjort lagres i history-listen
                 input_ikke_valid = False
-                ########################################################################################################
+
+                # ------------------------------------------------------------------------------------------------------
+                # Posisjonen til kongene lagres
+
                 if brikke_flyttes.letter == 'K':
                     self.W_king_pos = [toX, toY]  # Lagrer posisjonen til hvit konge
                 elif brikke_flyttes.letter == 'k':
                     self.B_king_pos = [toX, toY]  # Lagrer posisjonen til svart konge
-                ########################################################################################################
-                if self.turn % 2:  # Hvis hvit sin tur
-                    if self.B_king_pos in trussel_etter[3]:  # Hvis svart konge er truet etter hvit sitt trekk
-                        while True:
-                            farligeFiendeBrikker = []
-                            print('SJAKK')
 
-                            # Sjekker om kongen har en vei ut
-                            for x in trussel_etter[0]:  # For mulige trekk til svart konge
-                                if not self.sjakkbrett[x[0]][x[1]] and x not in trussel_etter[1]:  # Trekk som ikke er truet
-                                    print('Det er visst en vei ut')
-                                    return 'WP'
+                # ------------------------------------------------------------------------------------------------------
+                # Kjører sjakkmatt-funksjonen for å se om noen har vunnet
 
-                            # Sjekker hvilke brikker som truer kongen
-                            for kolonne in self.sjakkbrett:
-                                for rute in kolonne:
-                                    if rute and rute.color == 'W':
-                                        if rute.is_valid_movement(self.B_king_pos[0], self.B_king_pos[1], self.sjakkbrett, self.history, trussel_før):
-                                            farligeFiendeBrikker.append(rute)
+                if self.sjakkmatt(trussel_før, trussel_etter):
+                    if self.turn % 2:
+                        print('Hvit vinner!')
+                        return 'GG'
+                    else:
+                        print('Svart vinner!')
+                        return 'GG'
 
-                            # Hvis kongen står i sjakk av flere brikker
-                            if len(farligeFiendeBrikker) > 2:
-                                print('MATT')
-                                verdict = 'GG'
-                                return 'GG'
+                # ------------------------------------------------------------------------------------------------------
+                # Hvis en bonde har nådd enden og har mulighet til å forvandle seg
 
-                            # Sjekker om noen brikker kan ta fiendebrikken som sjakker
-                            for kolonne in self.sjakkbrett:
-                                for rute in kolonne:
-                                    if rute and rute.color == 'B':
-                                        if rute.is_valid_movement(farligeFiendeBrikker[0].x, farligeFiendeBrikker[0].y, self.sjakkbrett, self.history, trussel_før):
-                                            print('Backup is on the way')
-                                            return 'WP'
-
-                            # Finner rutene mellom kongen og den fiendtlige brikken som sjakker
-                            x, y = farligeFiendeBrikker[0].x, farligeFiendeBrikker[0].y
-                            a, b = self.B_king_pos[0], self.B_king_pos[1]
-                            mulige_block_ruter = []
-                            if x == a:  # Loddrett
-                                mini = min(b, y)
-                                maxi = max(b, y)
-                                for i in range(1, maxi - mini):
-                                    mulige_block_ruter.append([x, mini + i])
-                            elif y == b:  # Vannrett
-                                mini = min(a, x)
-                                maxi = max(a, x)
-                                for i in range(1, maxi - mini):
-                                    mulige_block_ruter.append([mini+ i, y])
-                            else:  # Diagonalt
-                                xamax = max(x,a)
-                                xamin = min(x,a)
-                                ybmax = max(y,b)
-                                ybmin = min(y,b)
-                                for i in range(1, xamax-xamin):  # (1, 3)
-                                    for j in range(1, ybmax-ybmin):  # (1, 3)
-                                        if i != j:
-                                            pass
-                                        else:
-                                            mulige_block_ruter.append([xamin+i, ybmin+j])
-
-                            # Sjekker om noen vennlige brikker kan blokkere sjakken
-                            for kolonne in self.sjakkbrett:
-                                for rute in kolonne:
-                                    if rute and rute.color == 'B':
-                                        for mulig_rute in mulige_block_ruter:
-                                            if rute.is_valid_movement(mulig_rute[0], mulig_rute[1], self.sjakkbrett, self.history, trussel_før) and rute.letter != 'K':
-                                                print('Thank the heavens we are saved!')
-                                                return 'WP'
-                            print('MATT')
-                            verdict = 'GG'
-                            break
-                        if verdict == 'GG':
-                            return 'GG'
-                        else:
-                            print('SAVED YES')
-                else:
-                    if self.W_king_pos in trussel_etter[1]:  # Hvis hvit konge er truet etter svart sitt trekk
-                        while True:
-                            farligeFiendeBrikker = []
-                            print('SJAKK')
-
-                            # Sjekker om kongen har en vei ut
-                            for x in trussel_etter[2]:  # For mulige trekk til hvit konge
-                                if not self.sjakkbrett[x[0]][x[1]] and x not in trussel_etter[1]:  # Trekk som ikke er truet
-                                    print('Det er visst en vei ut')
-                                    return 'WP'
-
-                            # Sjekker hvilke brikker som truer kongen
-                            for kolonne in self.sjakkbrett:
-                                for rute in kolonne:
-                                    if rute and rute.color == 'B':
-                                        if rute.is_valid_movement(self.W_king_pos[0], self.W_king_pos[1], self.sjakkbrett, self.history, trussel_før):
-                                            farligeFiendeBrikker.append(rute)
-
-                            # Hvis kongen står i sjakk av flere brikker
-                            if len(farligeFiendeBrikker) > 2:
-                                print('MATT')
-                                verdict = 'GG'
-                                return 'GG'
-
-                            # Sjekker om noen brikker kan ta fiendebrikken som sjakker
-                            for kolonne in self.sjakkbrett:
-                                for rute in kolonne:
-                                    if rute and rute.color == 'W':
-                                        if rute.is_valid_movement(farligeFiendeBrikker[0].x, farligeFiendeBrikker[0].y, self.sjakkbrett, self.history, trussel_før):
-                                            print('Backup is on the way from', rute, 'on', rute.x, rute.y)
-                                            return 'WP'
-
-                            # Finner rutene mellom kongen og den fiendtlige brikken som sjakker
-                            x, y = farligeFiendeBrikker[0].x, farligeFiendeBrikker[0].y
-                            a, b = self.W_king_pos[0], self.W_king_pos[1]
-                            mulige_block_ruter = []
-                            if x == a:  # Loddrett
-                                mini = min(b, y)
-                                maxi = max(b, y)
-                                for i in range(1, maxi - mini):
-                                    mulige_block_ruter.append([x, mini + i])
-                            elif y == b:  # Vannrett
-                                mini = min(a, x)
-                                maxi = max(a, x)
-                                for i in range(1, maxi - mini):
-                                    mulige_block_ruter.append([mini+ i, y])
-                            else:  # Diagonalt
-                                print('Me kjøre denne vettu ;)')
-                                xamax = max(x,a) # dronning 7
-                                xamin = min(x,a) # konge 4
-                                ybmax = max(y,b) # dronning 3
-                                ybmin = min(y,b) # konge 0
-                                for i in range(1, xamax-xamin):  # (1, 3)
-                                    for j in range(1, ybmax-ybmin):  # (1, 3)
-                                        if i != j:
-                                            pass
-                                        else:
-                                            mulige_block_ruter.append([xamin+i, ybmin+j])
-
-                            # Sjekker om noen vennlige brikker kan blokkere sjakken
-                            for kolonne in self.sjakkbrett:
-                                for rute in kolonne:
-                                    if rute and rute.color == 'W':
-                                        for mulig_rute in mulige_block_ruter:
-                                            if rute.is_valid_movement(mulig_rute[0], mulig_rute[1], self.sjakkbrett, self.history, trussel_før) and rute.letter != 'K':
-                                                print('Thank the heavens we are saved by', rute, 'on', rute.x, rute.y, 'cuz he be movin to', mulig_rute[0], mulig_rute[1])
-                                                print('The choices were', mulige_block_ruter)
-                                                return 'WP'
-                            print('MATT')
-                            verdict = 'GG'
-                            return 'GG'
-                        if verdict == 'GG':
-                            return 'GG'
-                        else:
-                            print('SAVED YES')
-                ########################################################################################################
                 if (brikke_flyttes.letter == 'P' or brikke_flyttes.letter == 'p') and (brikke_flyttes.y == 7 or brikke_flyttes.y == 0):
                     if self.turn % 2:
                         farge = 'W'
@@ -294,15 +172,15 @@ class Engine(object):
                         self.sjakkbrett[toX][toY] = Bishop(farge, x, toY)
                     elif ny_brikke == 'q':
                         self.sjakkbrett[toX][toY] = Queen(farge, x, toY)
-                ########################################################################################################
+
             else:
                 print('Ulovlig trekk!')
                 # input_ikke_valid er fremdeles True, så loopen kjøres igjen
 
-    # ==================================================================================================================
+    ####################################################################################################################
 
-    # Lager liste med trusler for svart og hvit
-    def threat(self):  # Funksjonen som lager en liste over trusler
+    def threat(self):
+        """Funksjonen som lager en liste over trusler"""
         B_piece_threat = []  # Listen som skal brukes for å lagre trusselen som de svarte brikkene lager
         W_piece_threat = []  # Listen som skal brukes for å lagre trusselen som de hvite brikkene lager
         W_king_threat = []  # Listen som skal brukes for å lagre trusselen som den hvite kongen lager
@@ -487,5 +365,93 @@ class Engine(object):
         return B_king_threat, B_piece_threat, W_king_threat, W_piece_threat
         # Returnerer trussellisten til svart konge[0], svarte brikker[1], hvit konge[2] og hvite brikker[3]
 
+    ####################################################################################################################
+
+    def sjakkmatt(self, trussel_før, trussel_etter):
+        """Funksjon for å finne ut om det er sjakk matt"""
+        if self.B_king_pos in trussel_etter[3] or self.W_king_pos in trussel_etter[1]:  # Hvis konge er truet
+            if self.turn % 2:
+                tall1 = 3
+                tall2 = 0
+                farge1 = 'W'
+                farge2 = 'B'
+                kongepos = self.B_king_pos
+                konge_l = 'k'
+            else:
+                tall1 = 1
+                tall2 = 2
+                farge1 = 'B'
+                farge2 = 'W'
+                kongepos = self.W_king_pos
+                konge_l = 'K'
+
+
+            farligeFiendeBrikker = []
+            print('SJAKK')
+
+            # Sjekker om kongen har en vei ut
+            for x in trussel_etter[tall2]:  # For mulige trekk til konge
+                if not self.sjakkbrett[x[0]][x[1]] and x not in trussel_etter[tall1]:  # Trekk som ikke er truet
+                    # print('Det er visst en vei ut')
+                    return False
+
+            # Sjekker hvilke brikker som truer kongen
+            for kolonne in self.sjakkbrett:
+                for rute in kolonne:
+                    if rute and rute.color == farge1:
+                        if rute.is_valid_movement(kongepos[0], kongepos[1], self.sjakkbrett, self.history, trussel_før):
+                            farligeFiendeBrikker.append(rute)
+
+            # Hvis kongen står i sjakk av flere brikker
+            if len(farligeFiendeBrikker) > 2:
+                print('MATT')
+                return True
+
+            # Sjekker om noen brikker kan ta fiendebrikken som sjakker
+            for kolonne in self.sjakkbrett:
+                for rute in kolonne:
+                    if rute and rute.color == farge2:
+                        if rute.is_valid_movement(farligeFiendeBrikker[0].x, farligeFiendeBrikker[0].y, self.sjakkbrett, self.history, trussel_før):
+                            # print('Backup is on the way')
+                            return False
+
+            # Finner rutene mellom kongen og den fiendtlige brikken som sjakker
+            x, y = farligeFiendeBrikker[0].x, farligeFiendeBrikker[0].y
+            a, b = kongepos[0], kongepos[1]
+            mulige_block_ruter = []
+            if x == a:  # Loddrett
+                mini = min(b, y)
+                maxi = max(b, y)
+                for i in range(1, maxi - mini):
+                    mulige_block_ruter.append([x, mini + i])
+            elif y == b:  # Vannrett
+                mini = min(a, x)
+                maxi = max(a, x)
+                for i in range(1, maxi - mini):
+                    mulige_block_ruter.append([mini+ i, y])
+            else:  # Diagonalt
+                xamax = max(x,a)
+                xamin = min(x,a)
+                ybmax = max(y,b)
+                ybmin = min(y,b)
+                for i in range(1, xamax-xamin):  # (1, 3)
+                    for j in range(1, ybmax-ybmin):  # (1, 3)
+                        if i != j:
+                            pass
+                        else:
+                            mulige_block_ruter.append([xamin+i, ybmin+j])
+
+            # Sjekker om noen vennlige brikker kan blokkere sjakken
+            for kolonne in self.sjakkbrett:
+                for rute in kolonne:
+                    if rute and rute.color == farge2:
+                        for mulig_rute in mulige_block_ruter:
+                            if rute.is_valid_movement(mulig_rute[0], mulig_rute[1], self.sjakkbrett, self.history, trussel_før) and rute.letter != konge_l:
+                                # print('Thank the heavens we are saved!')
+                                return False
+            print('MATT')
+            return True
+
+    ####################################################################################################################
 
 Engine()
